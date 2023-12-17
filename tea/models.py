@@ -50,7 +50,7 @@ class Store(models.Model):
     website = models.URLField()
 
 
-class Images(models.Model):
+class Image(models.Model):
     image = models.ImageField(upload_to='tea-images')
 
 
@@ -60,7 +60,7 @@ class Tea(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
-    images = models.ForeignKey(Images, null=True, on_delete=models.SET_NULL)
+    images = models.ForeignKey(Image, null=True, on_delete=models.SET_NULL)
 
     price_per_100_grams = models.FloatField(validators=[MinValueValidator(1)])
     grams_left = models.IntegerField(validators=[MinValueValidator(0)])
