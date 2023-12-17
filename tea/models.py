@@ -50,9 +50,14 @@ class Store(models.Model):
     website = models.URLField()
 
 
+class Profile(models.Model):
+    name = models.CharField(max_length=50)
+
+
 class Tea(models.Model):
     SEASON_CHOICES = {'Sp': 'Spring', 'Su': 'Summer', 'Au': 'Autumn', 'Wi': 'Winter'}
 
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
@@ -90,11 +95,6 @@ class Tea(models.Model):
 class Image(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='tea-images')
-
-
-class Profile(models.Model):
-    name = models.CharField(max_length=50)
-    teas = models.ForeignKey(Tea, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.name
