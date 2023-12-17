@@ -59,8 +59,8 @@ class Tea(models.Model):
 
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    store = models.ForeignKey(Store, null=True)
-    images = models.ForeignKey(Images, null=True)
+    store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
+    images = models.ForeignKey(Images, null=True, on_delete=models.SET_NULL)
 
     price_per_100_grams = models.FloatField(validate=[MinValueValidator(1)])
     grams_left = models.IntegerField(validate=[MinValueValidator(0)])
@@ -75,14 +75,14 @@ class Tea(models.Model):
     user_description = models.TextField(blank=True)
     tasting_notes = models.TextField(blank=True)
     additional_notes = models.TextField(blank=True)
-    brews = models.ForeignKey(Brew, null=True)
+    brews = models.ForeignKey(Brew, null=True, on_delete=models.SET_NULL)
 
-    country = models.ForeignKey(Country, null=True)
-    province = models.ForeignKey(Province, null=True)
-    province = models.ForeignKey(Region, null=True)
+    country = models.ForeignKey(Country, null=True, on_delete=models.SET_NULL)
+    province = models.ForeignKey(Province, null=True, on_delete=models.SET_NULL)
+    province = models.ForeignKey(Region, null=True, on_delete=models.SET_NULL)
 
-    type = models.ForeignKey(Type)
-    cultivar = models.ForeignKey(Cultivar, null=True)
+    type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
+    cultivar = models.ForeignKey(Cultivar, null=True, on_delete=models.SET_NULL)
 
     season = models.CharField(null=True, max_length=2, choices=SEASON_CHOICES)
     year = models.IntegerField(null=True)
