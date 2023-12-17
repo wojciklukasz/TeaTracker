@@ -34,7 +34,7 @@ class Province(models.Model):
 
 class Region(models.Model):
     name = models.CharField(max_length=30)
-    country = models.ForeignKey(Province, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.name
