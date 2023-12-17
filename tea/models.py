@@ -55,7 +55,7 @@ class Profile(models.Model):
 
 
 class Tea(models.Model):
-    SEASON_CHOICES = {'Sp': 'Spring', 'Su': 'Summer', 'Au': 'Autumn', 'Wi': 'Winter'}
+    SEASON_CHOICES = {'W': 'Wiosna', 'L': 'Lato', 'J': 'Jesień', 'Z': 'Zima'}
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -84,7 +84,7 @@ class Tea(models.Model):
     type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
     cultivar = models.ForeignKey(Cultivar, null=True, on_delete=models.SET_NULL)
 
-    season = models.CharField(null=True, max_length=2, choices=SEASON_CHOICES)
+    season = models.CharField(null=True, max_length=1, choices=SEASON_CHOICES)
     year = models.IntegerField(null=True)
     harvest_date = models.DateField(null=True)
 
