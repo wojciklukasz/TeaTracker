@@ -79,7 +79,7 @@ class Tea(models.Model):
 
     country = models.ForeignKey(Country, null=True, on_delete=models.SET_NULL)
     province = models.ForeignKey(Province, null=True, on_delete=models.SET_NULL)
-    province = models.ForeignKey(Region, null=True, on_delete=models.SET_NULL)
+    region = models.ForeignKey(Region, null=True, on_delete=models.SET_NULL)
 
     type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
     cultivar = models.ForeignKey(Cultivar, null=True, on_delete=models.SET_NULL)
