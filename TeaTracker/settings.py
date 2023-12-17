@@ -30,9 +30,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv('IS_DEV', 'True') == 'True' else False
 
-ALLOWED_HOSTS = [
-    os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1')
-]
+ALLOWED_HOSTS = [os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1')]
 
 
 # Application definition
@@ -44,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tea',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +127,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/files/'
