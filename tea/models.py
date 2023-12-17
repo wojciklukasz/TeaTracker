@@ -42,7 +42,7 @@ class Region(models.Model):
 
 class Brew(models.Model):
     brew_date = models.DateField(auto_now_add=True)
-    tasting_notes = models.CharField()
+    tasting_notes = models.TextField()
 
 
 class Store(models.Model):
@@ -62,10 +62,10 @@ class Tea(models.Model):
     store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
     images = models.ForeignKey(Images, null=True, on_delete=models.SET_NULL)
 
-    price_per_100_grams = models.FloatField(validate=[MinValueValidator(1)])
-    grams_left = models.IntegerField(validate=[MinValueValidator(0)])
+    price_per_100_grams = models.FloatField(validators=[MinValueValidator(1)])
+    grams_left = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(
-        null=True, validate=[MinValueValidator(1), MaxValueValidator(10)]
+        null=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
     date_added = models.DateField(auto_now_add=True)
