@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -74,7 +75,7 @@ class Tea(models.Model):
     )
 
     date_added = models.DateTimeField(auto_now_add=True)
-    last_viewed = models.DateTimeField(auto_now_add=True)
+    last_viewed = models.DateTimeField(default=timezone.now(), blank=True)
     date_finished = models.DateField(null=True, blank=True)
 
     store_description = models.TextField(blank=True)
