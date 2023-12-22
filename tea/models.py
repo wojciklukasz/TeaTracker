@@ -40,11 +40,6 @@ class Region(models.Model):
         return self.name
 
 
-class Brew(models.Model):
-    brew_date = models.DateField(auto_now_add=True)
-    tasting_notes = models.TextField()
-
-
 class Store(models.Model):
     name = models.CharField(max_length=50)
     website = models.URLField()
@@ -75,7 +70,6 @@ class Tea(models.Model):
     user_description = models.TextField(blank=True)
     tasting_notes = models.TextField(blank=True)
     additional_notes = models.TextField(blank=True)
-    brews = models.ForeignKey(Brew, null=True, on_delete=models.SET_NULL)
 
     country = models.ForeignKey(Country, null=True, on_delete=models.SET_NULL)
     province = models.ForeignKey(Province, null=True, on_delete=models.SET_NULL)
@@ -90,6 +84,12 @@ class Tea(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Brew(models.Model):
+    tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
+    brew_date = models.DateField(auto_now_add=True)
+    tasting_notes = models.TextField()
 
 
 class Image(models.Model):
