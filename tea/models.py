@@ -8,10 +8,16 @@ from django.db import models
 class Profile(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Store(models.Model):
     name = models.CharField(max_length=50)
     website = models.URLField()
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Type(models.Model):
@@ -92,6 +98,9 @@ class Brew(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     brew_date = models.DateField(auto_now_add=True)
     tasting_notes = models.TextField()
+
+    def __str__(self) -> str:
+        return f'{self.tea.name} {self.brew_date}'
 
 
 class Image(models.Model):
