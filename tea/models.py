@@ -3,6 +3,17 @@ from django.db import models
 
 
 # Create your models here.
+
+
+class Profile(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=50)
+    website = models.URLField()
+
+
 class Type(models.Model):
     name = models.CharField(max_length=25)
 
@@ -38,15 +49,6 @@ class Region(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-
-class Store(models.Model):
-    name = models.CharField(max_length=50)
-    website = models.URLField()
-
-
-class Profile(models.Model):
-    name = models.CharField(max_length=50)
 
 
 class Tea(models.Model):
