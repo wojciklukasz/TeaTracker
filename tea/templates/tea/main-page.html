@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/main-page.css" %}">
+{% endblock %}
+
 {% block title %}Strona główna{% endblock title %}
 
 {% block content %}
@@ -8,31 +12,31 @@
         <article id="most-recent-teas">
             <h2>Ostatnio dodane herbaty</h2>
             <li id="recent-teas-list">
-                <ul>
-                    {% for tea in teas.recent %}
+                {% for tea in teas.recent %}
+                    <ul>
                         <h3>{{ tea.name }}</h3>
-                    {% endfor %}
-                </ul>
+                    </ul>
+                {% endfor %}
             </li>
         </article>
         <article id="random-teas">
             <h2>Losowe herbaty</h2>
             <li id="random-teas-list">
-                <ul>
-                    {% for tea in teas.random %}
+                {% for tea in teas.random %}
+                    <ul>
                         <h3>{{ tea.name }}</h3>
-                    {% endfor %}
-                </ul>
+                    </ul>
+                {% endfor %}
             </li>
         </article>
         <article id="last-viewed-teas">
             <h2>Ostatnio oglądane</h2>
             <li id="last-viewed-teas-list">
-                <ul>
-                    {% for tea in teas.last_viewed %}
+                {% for tea in teas.last_viewed %}
+                    <ul>
                         <h3>{{ tea.name }}</h3>
-                    {% endfor %}
-                </ul>
+                    </ul>
+                {% endfor %}
             </li>
         </article>
     </main>
