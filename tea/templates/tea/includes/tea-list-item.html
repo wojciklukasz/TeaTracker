@@ -1,0 +1,13 @@
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/main-page.css" %}">
+{% endblock %}
+
+<li id="recent-teas-list">
+    {% for tea in teas.recent %}
+        <ul>
+            <h3>{{ tea.name }}</h3>
+        </ul>
+    {% endfor %}
+</li>

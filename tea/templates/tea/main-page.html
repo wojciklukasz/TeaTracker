@@ -11,33 +11,15 @@
     <main id="main-content">
         <article id="most-recent-teas">
             <h2>Ostatnio dodane herbaty</h2>
-            <li id="recent-teas-list">
-                {% for tea in teas.recent %}
-                    <ul>
-                        <h3>{{ tea.name }}</h3>
-                    </ul>
-                {% endfor %}
-            </li>
+            {% include "tea/includes/tea-list-item.html" %}
         </article>
         <article id="random-teas">
             <h2>Losowe herbaty</h2>
-            <li id="random-teas-list">
-                {% for tea in teas.random %}
-                    <ul>
-                        <h3>{{ tea.name }}</h3>
-                    </ul>
-                {% endfor %}
-            </li>
+            {% include "tea/includes/tea-list-item.html" %}
         </article>
         <article id="last-viewed-teas">
             <h2>Ostatnio oglądane</h2>
-            <li id="last-viewed-teas-list">
-                {% for tea in teas.last_viewed %}
-                    <ul>
-                        <h3>{{ tea.name }}</h3>
-                    </ul>
-                {% endfor %}
-            </li>
+            {% include "tea/includes/tea-list-item.html" %}
         </article>
     </main>
 {% endblock  %}
