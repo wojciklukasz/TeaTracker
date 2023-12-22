@@ -1,13 +1,13 @@
 {% load static %}
 
-{% block css_files %}
-    <link rel="stylesheet" href="{% static "tea/main-page.css" %}">
-{% endblock %}
 
-<li id="recent-teas-list">
-    {% for tea in teas.recent %}
-        <ul>
-            <h3>{{ tea.name }}</h3>
-        </ul>
-    {% endfor %}
-</li>
+<ul>
+    <a href="">
+        {% if tea.image_set.first.image.url %}
+            <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+        {% else %}
+            <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+        {% endif %}
+        <h3>{{ tea.name }}</h3>
+    </a>
+</ul>
