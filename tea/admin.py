@@ -6,6 +6,19 @@ from . import models
 
 
 class TeaAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'type',
+        'year',
+        'country',
+        'store',
+    )
+    list_filter = (
+        'type',
+        'year',
+        'country',
+        'store',
+    )
     prepopulated_fields = {'slug': ('name',)}
 
 
