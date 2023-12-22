@@ -96,6 +96,14 @@ class Tea(models.Model):
         return self.name
 
 
+class Image(models.Model):
+    tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='tea-images')
+
+    def __str__(self) -> str:
+        return f'{self.id} - {self.tea.name}'
+
+
 class Brew(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     brew_date = models.DateField(auto_now_add=True)
@@ -105,9 +113,9 @@ class Brew(models.Model):
         return f'{self.tea.name} {self.brew_date}'
 
 
-class Image(models.Model):
-    tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='tea-images')
+class BrewImage(models.Model):
+    brew = models.ForeignKey(Brew, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='brew-images')
 
     def __str__(self) -> str:
-        return f'{self.id} - {self.tea.name}'
+        return f'{self.id} - {self.brew.tea}'
