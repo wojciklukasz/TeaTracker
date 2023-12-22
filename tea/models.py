@@ -107,4 +107,4 @@ class Image(models.Model):
     image = models.ImageField(upload_to='tea-images')
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.id} - {self.tea.name}'
