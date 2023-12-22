@@ -118,4 +118,4 @@ class BrewImage(models.Model):
     image = models.ImageField(upload_to='brew-images')
 
     def __str__(self) -> str:
-        return f'{self.id} - {self.brew.tea}'
+        return f'{self.id} - {self.brew.brew_date} - {self.brew.tea}'
