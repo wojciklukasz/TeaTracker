@@ -13,7 +13,16 @@
             <h2>Ostatnio dodane herbaty</h2>
             <ul id="recent-teas-list">
                 {% for tea in teas.recent %}
-                    {% include "tea/includes/tea-list-item.html" %}
+                    <li>
+                        <a href="">
+                            {% if tea.image_set.first.image.url %}
+                                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                            {% else %}
+                                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                            {% endif %}
+                            <h3>{{ tea.name }}</h3>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </article>
@@ -21,7 +30,16 @@
             <h2>Losowe herbaty</h2>
             <ul id="random-teas-list">
                 {% for tea in teas.random %}
-                    {% include "tea/includes/tea-list-item.html" %}
+                    <li>
+                        <a href="">
+                            {% if tea.image_set.first.image.url %}
+                                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                            {% else %}
+                                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                            {% endif %}
+                            <h3>{{ tea.name }}</h3>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </article>
@@ -29,7 +47,16 @@
             <h2>Ostatnio oglądane</h2>
             <ul id="last-viewed-teas-list">
                 {% for tea in teas.last_viewed %}
-                    {% include "tea/includes/tea-list-item.html" %}
+                    <li>
+                        <a href="">
+                            {% if tea.image_set.first.image.url %}
+                                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                            {% else %}
+                                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                            {% endif %}
+                            <h3>{{ tea.name }}</h3>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </article>
