@@ -1,7 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-
 # Create your models here.
 
 
@@ -68,11 +67,11 @@ class Tea(models.Model):
     price_per_100_grams = models.FloatField(validators=[MinValueValidator(1)])
     grams_left = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(
-        null=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
+        null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
     date_added = models.DateField(auto_now_add=True)
-    date_finished = models.DateField(null=True)
+    date_finished = models.DateField(null=True, blank=True)
 
     store_description = models.TextField(blank=True)
     user_description = models.TextField(blank=True)
