@@ -1,8 +1,24 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-
 # Create your models here.
+
+
+class Profile(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=50)
+    website = models.URLField()
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Type(models.Model):
     name = models.CharField(max_length=25)
 
@@ -18,6 +34,9 @@ class Cultivar(models.Model):
 
 
 class Country(models.Model):
+    class Meta:
+        verbose_name_plural = 'Countries'
+
     name = models.CharField(max_length=25)
 
     def __str__(self) -> str:
@@ -40,20 +59,6 @@ class Region(models.Model):
         return self.name
 
 
-class Brew(models.Model):
-    brew_date = models.DateField(auto_now_add=True)
-    tasting_notes = models.TextField()
-
-
-class Store(models.Model):
-    name = models.CharField(max_length=50)
-    website = models.URLField()
-
-
-class Profile(models.Model):
-    name = models.CharField(max_length=50)
-
-
 class Tea(models.Model):
     SEASON_CHOICES = [('W', 'Wiosna'), ('L', 'Lato'), ('J', 'Jesien'), ('Z', 'Zima')]
 
@@ -65,17 +70,16 @@ class Tea(models.Model):
     price_per_100_grams = models.FloatField(validators=[MinValueValidator(1)])
     grams_left = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(
-        null=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
+        null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
     date_added = models.DateField(auto_now_add=True)
-    date_finished = models.DateField(null=True)
+    date_finished = models.DateField(null=True, blank=True)
 
     store_description = models.TextField(blank=True)
     user_description = models.TextField(blank=True)
     tasting_notes = models.TextField(blank=True)
     additional_notes = models.TextField(blank=True)
-    brews = models.ForeignKey(Brew, null=True, on_delete=models.SET_NULL)
 
     country = models.ForeignKey(Country, null=True, on_delete=models.SET_NULL)
     province = models.ForeignKey(Province, null=True, on_delete=models.SET_NULL)
@@ -97,4 +101,21 @@ class Image(models.Model):
     image = models.ImageField(upload_to='tea-images')
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.id} - {self.tea.name}'
+
+
+class Brew(models.Model):
+    tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
+    brew_date = models.DateField(auto_now_add=True)
+    tasting_notes = models.TextField()
+
+    def __str__(self) -> str:
+        return f'{self.tea.name} {self.brew_date}'
+
+
+class BrewImage(models.Model):
+    brew = models.ForeignKey(Brew, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='brew-images')
+
+    def __str__(self) -> str:
+        return f'{self.id} - {self.brew.brew_date} - {self.brew.tea}'
