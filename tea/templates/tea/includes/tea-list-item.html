@@ -1,7 +1,7 @@
 {% load static %}
 
 
-<ul>
+<li>
     <a href="">
         {% if tea.image_set.first.image.url %}
             <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
@@ -10,4 +10,4 @@
         {% endif %}
         <h3>{{ tea.name }}</h3>
     </a>
-</ul>
+</li>

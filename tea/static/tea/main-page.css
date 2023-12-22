@@ -9,7 +9,7 @@ main {
     font-weight: 600;
 }
 
-#main-content li {
+#main-content ul {
     list-style-type: none;
     display: flex;
 }

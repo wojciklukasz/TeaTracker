@@ -29,8 +29,8 @@ class MainPageTestCase(TestCase):
 
     def test_item_lists(self) -> None:
         response = self.client.get('')
-        self.assertContains(response, '</li>', count=3, html=False)
-        self.assertContains(response, '</ul>', count=9, html=False)
+        self.assertContains(response, '</ul>', count=3, html=False)
+        self.assertContains(response, '</li>', count=9, html=False)
 
     def test_images(self) -> None:
         response = self.client.get('')
