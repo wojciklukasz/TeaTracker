@@ -34,6 +34,9 @@ class Cultivar(models.Model):
 
 
 class Country(models.Model):
+    class Meta:
+        verbose_name_plural = 'Countries'
+
     name = models.CharField(max_length=25)
 
     def __str__(self) -> str:
