@@ -26,5 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        DJANGO_SECRET_KEY: 'django-insecure-u-f%+qba&*$p8g)#z-w)_6r#*xk_gl6-rxl-!n$61%^*345%_e'
       run: |
         python manage.py test
