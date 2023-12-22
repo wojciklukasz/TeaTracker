@@ -26,6 +26,14 @@
             </li>
         </article>
         <article id="last-viewed-teas">
+            <h2>Ostatnio oglądane</h2>
+            <li id="last-viewed-teas-list">
+                <ul>
+                    {% for tea in teas.last_viewed %}
+                        <h3>{{ tea.name }}</h3>
+                    {% endfor %}
+                </ul>
+            </li>
         </article>
     </main>
 {% endblock  %}

@@ -18,9 +18,11 @@ class MainPageView(ListView):
         queryset = super().get_queryset()
         queryset_recent = queryset[:3]
         queryset_random = Tea.objects.all().order_by('?')[:3]
+        queryset_last_viewed = Tea.objects.all().order_by('last_viewed')[:3]
         queryset_dict = {
             'recent': queryset_recent,
             'random': queryset_random,
+            'last_viewed': queryset_last_viewed,
         }
 
         return queryset_dict
