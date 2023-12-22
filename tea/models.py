@@ -73,7 +73,8 @@ class Tea(models.Model):
         null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
-    date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    last_viewed = models.DateTimeField(auto_now_add=True)
     date_finished = models.DateField(null=True, blank=True)
 
     store_description = models.TextField(blank=True)
