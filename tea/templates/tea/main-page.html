@@ -4,5 +4,28 @@
 {% block title %}Strona główna{% endblock title %}
 
 {% block content %}
-    <p>Strona główna</p>
+    <main id="main-content">
+        <article id="most-recent-teas">
+            <h2>Ostatnio dodane herbaty</h2>
+            <li id="recent-teas-list">
+                <ul>
+                    {% for tea in teas.recent %}
+                        <h3>{{ tea.name }}</h3>
+                    {% endfor %}
+                </ul>
+            </li>
+        </article>
+        <article id="random-teas">
+            <h2>Losowe herbaty</h2>
+            <li id="random-teas-list">
+                <ul>
+                    {% for tea in teas.random %}
+                        <h3>{{ tea.name }}</h3>
+                    {% endfor %}
+                </ul>
+            </li>
+        </article>
+        <article id="last-viewed-teas">
+        </article>
+    </main>
 {% endblock  %}
