@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/tea-detail.css" %}">
+{% endblock %}
+
+{% block title %}{{ tea.name }}{% endblock title %}
+
+{% block content %}
+    <main id='details-main'>
+        <h1>{{ tea.name }}</h1>
+        <div id='image-and-description'>
+            {% if tea.image_set.first.image.url %}
+                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+            {% else %}
+                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+            {% endif %}
+            <section id='description'>
+                <h2>Opis sprzedawcy</h2>
+                <p>{{ tea.store_description }}</p>
+                <h2>Opis własny</h2>
+                <p>{{ tea.user_description }}</p>
+                <h2>Smak</h2>
+                <p>{{ tea.tasting_notes }}</p>
+            </section>
+        </div>
+    </main>
+{% endblock %}

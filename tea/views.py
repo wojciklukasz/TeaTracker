@@ -2,6 +2,7 @@ from typing import Any
 
 from django.db.models.query import QuerySet
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
 from .models import Tea
 
@@ -26,3 +27,8 @@ class MainPageView(ListView):
         }
 
         return queryset_dict
+
+
+class TeaDetailView(DetailView):
+    model = Tea
+    template_name = 'tea/tea-detail.html'
