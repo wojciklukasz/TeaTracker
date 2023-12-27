@@ -10,20 +10,54 @@
 {% block content %}
     <main id='details-main'>
         <h1>{{ tea.name }}</h1>
-        <div id='image-and-description'>
-            {% if tea.image_set.first.image.url %}
-                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+        <section id="cultivar">
+            <p><b>Kultywar:</b>
+            {% if tea.cultivar %}
+                {{ tea.cultivar }}
             {% else %}
-                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                Brak danych
             {% endif %}
-            <section id='description'>
-                <h2>Opis sprzedawcy</h2>
-                <p>{{ tea.store_description }}</p>
-                <h2>Opis własny</h2>
-                <p>{{ tea.user_description }}</p>
-                <h2>Smak</h2>
-                <p>{{ tea.tasting_notes }}</p>
-            </section>
+            </p>
+        </section>
+        <div id='details'>
+            {% if tea.image_set.first.image.url %}
+            <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+            {% else %}
+            <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+            {% endif %}
+            <div id="text-grid">
+                <section id="dates">
+                    <p><b>Sezon:</b>
+                    {% if tea.season %}
+                        {{ tea.get_season_display }}
+                    {% else %}
+                        Brak danych
+                    {% endif %}
+                    </p>
+                    <p><b>Rocznik:</b>
+                        {% if tea.year %}
+                            {{ tea.year }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Data zbiorów:</b>
+                        {% if tea.harvest_date %}
+                            {{ tea.harvest_date }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                </section>
+                <section id="description">
+                    <h2>Opis sprzedawcy</h2>
+                    <p>{{ tea.store_description }}</p>
+                    <h2>Opis własny</h2>
+                    <p>{{ tea.user_description }}</p>
+                    <h2>Smak</h2>
+                    <p>{{ tea.tasting_notes }}</p>
+                </section>
+            </div>
         </div>
     </main>
 {% endblock %}
