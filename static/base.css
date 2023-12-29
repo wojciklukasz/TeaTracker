@@ -33,6 +33,7 @@ h3 {
 
 #main-navigation nav {
     display: flex;
+    align-items: center;
 }
 
 #main-navigation a,
@@ -42,6 +43,7 @@ h1 {
     font-weight: bold;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+    display: grid;
 }
 
 #main-navigation a:hover,
