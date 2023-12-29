@@ -32,3 +32,10 @@ class MainPageView(ListView):
 class TeaDetailView(DetailView):
     model = Tea
     template_name = 'tea/tea-detail.html'
+
+
+class AllTeasView(ListView):
+    template_name = 'tea/all-teas.html'
+    model = Tea
+    context_object_name = 'teas'
+    ordering = ['-date_added']
