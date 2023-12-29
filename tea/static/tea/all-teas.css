@@ -12,6 +12,12 @@ main {
 #main-content ul {
     list-style-type: none;
     display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+#main-content li {
+    padding-bottom: 2rem;
 }
 
 #main-content a {
