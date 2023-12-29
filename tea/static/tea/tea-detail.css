@@ -1,0 +1,55 @@
+#details-main h1 {
+    color: #2e2e2e;
+}
+
+#cultivar p {
+    margin: 0;
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#details {
+    display: flex;
+}
+
+#text-grid {
+    display: grid;
+}
+
+#dates {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#dates p {
+    color: #2e2e2e;
+    font-size: large;
+    padding-left: 5rem;
+}
+
+#description {
+    display: flex;
+    flex-direction: column;
+}
+
+#description p {
+    color: #2e2e2e;
+    font-size: large;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+#description h2 {
+    color: #2e2e2e;
+    padding-left: 5rem;
+}
+
+.tea-image {
+    min-width: 30vw;
+    min-height: 50vh;
+    max-width: 30vw;
+    max-height: 50vh;
+    border: 1px solid #6d6c6c;
+    border-radius: 10px;
+    object-fit: scale-down;
+}

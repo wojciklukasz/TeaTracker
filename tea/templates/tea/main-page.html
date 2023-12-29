@@ -14,7 +14,7 @@
             <ul id="recent-teas-list">
                 {% for tea in teas.recent %}
                     <li>
-                        <a href="">
+                        <a href="{{ tea.slug }}">
                             {% if tea.image_set.first.image.url %}
                                 <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
                             {% else %}
@@ -31,7 +31,7 @@
             <ul id="random-teas-list">
                 {% for tea in teas.random %}
                     <li>
-                        <a href="">
+                        <a href="{{ tea.slug }}">
                             {% if tea.image_set.first.image.url %}
                                 <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
                             {% else %}
@@ -48,7 +48,7 @@
             <ul id="last-viewed-teas-list">
                 {% for tea in teas.last_viewed %}
                     <li>
-                        <a href="">
+                        <a href="{{ tea.slug }}">
                             {% if tea.image_set.first.image.url %}
                                 <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
                             {% else %}
