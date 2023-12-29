@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/all-teas.css" %}">
+{% endblock %}
+
+{% block title %}Wszystkie herbaty{% endblock title %}
+
+{% block content %}
+    <main id="main-content">
+        <article id="all-teas">
+            <h2>Lista herbat</h2>
+            <ul id="all-teas-list">
+                {% for tea in teas %}
+                    <li>
+                        <a href="{{ tea.slug }}">
+                            {% if tea.image_set.first.image.url %}
+                                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                            {% else %}
+                                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                            {% endif %}
+                            <h3>{{ tea.name }}</h3>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </article>
+    </main>
+{% endblock  %}
