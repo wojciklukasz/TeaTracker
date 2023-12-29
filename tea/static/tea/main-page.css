@@ -16,6 +16,10 @@ main {
     padding: 0;
 }
 
+#main-content li {
+    padding-bottom: 2rem;
+}
+
 #main-content a {
     margin-left: 2rem;
     margin-right: 2rem;
