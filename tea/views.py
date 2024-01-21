@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView
@@ -49,10 +50,8 @@ class TeaCreateView(CreateView):
     model = Tea
     form_class = TeaForm
     template_name = 'tea/create-tea.html'
-    success_url = reverse_lazy('all-teas')
 
-    def form_valid(self, form):
-        print('Form is valid')
+    def form_valid(self, form: TeaForm) -> HttpResponse:
         profile = Profile.objects.get(id=1)
 
         slug = slugify(form.instance.name)
@@ -61,4 +60,12 @@ class TeaCreateView(CreateView):
 
         form.instance.profile = profile
         form.instance.slug = slug
+
+        self.success_url = reverse_lazy(
+            'tea-detail',
+            kwargs={
+                'slug': slug,
+            },
+        )
+
         return super().form_valid(form)
