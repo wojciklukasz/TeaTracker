@@ -8,6 +8,7 @@
 {% block title %}Dodawanie herbaty{% endblock title %}
 
 {% block content %}
+    <h1>Nowa herbata</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
