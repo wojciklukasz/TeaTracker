@@ -56,7 +56,7 @@ class TeaCreateView(CreateView):
 
         slug = slugify(form.instance.name)
         if Tea.objects.filter(name=form.instance.name):
-            slug = slug + f'_{len(Tea.objects.filter(name=form.instance.name))}'
+            slug = slug + f'-{len(Tea.objects.filter(name=form.instance.name))}'
 
         form.instance.profile = profile
         form.instance.slug = slug
