@@ -1,0 +1,52 @@
+#main-content h1 {
+    text-align: center;
+}
+
+#short-fields {
+    display: flex;
+    text-align: center;
+}
+
+#long-fields {
+    text-align: center;
+}
+
+.column {
+    margin: auto;
+    width: 35%;
+}
+
+#tea-form {
+    margin: auto;
+    width: 50%;
+}
+
+#tea-form label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10%;
+    padding-bottom: 2px;
+}
+
+#tea-form input,
+textarea,
+select {
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    font-size: 20px;
+    width: 80%;
+}   
+
+#tea-form input[type=submit] {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+    border: 1px solid #6b6b6b;
+}
+
+#tea-form input[type=submit]:hover {
+    border: 1px solid #84a8e9;
+}

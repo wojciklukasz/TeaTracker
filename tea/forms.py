@@ -32,3 +32,21 @@ class TeaForm(forms.ModelForm):
             'year': 'Rok',
             'harvest_date': 'Data zbiorów',
         }
+        fields = [
+            'name',
+            'store',
+            'price_per_100_grams',
+            'grams_left',
+            'country',
+            'province',
+            'region',
+            'type',
+            'cultivar',
+            'season',
+            'year',
+            'harvest_date',
+            'store_description',
+            'user_description',
+            'tasting_notes',
+            'additional_notes',
+        ]
