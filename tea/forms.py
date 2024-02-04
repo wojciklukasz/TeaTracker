@@ -1,3 +1,6 @@
+from datetime import date
+from typing import Any
+
 from django import forms
 
 from .models import Tea
@@ -34,9 +37,9 @@ class TeaForm(forms.ModelForm):
         }
         fields = [
             'name',
-            'store',
             'price_per_100_grams',
             'grams_left',
+            'store',
             'country',
             'province',
             'region',
@@ -56,3 +59,16 @@ class TeaForm(forms.ModelForm):
                 attrs={'type': 'date'},
             ),
         }
+
+    def clean(self) -> dict[str, Any]:
+        cleaned_data = super(TeaForm, self).clean()
+
+        print(cleaned_data)
+
+        harvest_year = (
+            cleaned_data.get('year') if cleaned_data.get('year') is not None else 0
+        )
+        if harvest_year > date.today().year:
+            self.add_error('year', 'Rok produkcji jest większy niż aktualny rok!')
+
+        return cleaned_data
