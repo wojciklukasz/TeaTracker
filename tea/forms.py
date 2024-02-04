@@ -50,3 +50,9 @@ class TeaForm(forms.ModelForm):
             'tasting_notes',
             'additional_notes',
         ]
+        widgets = {
+            'harvest_date': forms.DateInput(
+                format='%d-%m-%Y',
+                attrs={'type': 'date'},
+            ),
+        }

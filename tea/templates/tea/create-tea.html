@@ -10,11 +10,6 @@
 {% block content %}
     <main id='main-content'>
         <h1>Nowa herbata</h1>
-        {% comment %} <form method="post" id="tea-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Dodaj">
-        </form> {% endcomment %}
         <form method="post" id="tea-form">
             {% csrf_token %}
             <div id="short-fields">
