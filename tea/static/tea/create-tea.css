@@ -5,6 +5,7 @@
 #short-fields {
     display: flex;
     text-align: center;
+    margin-top: 1rem;
 }
 
 #long-fields {
@@ -26,10 +27,13 @@
     flex-direction: column;
     align-items: flex-start;
     padding-left: 10%;
-    padding-bottom: 2px;
 }
 
-#tea-form input,
+.field {
+    margin-bottom: 20px;
+}
+
+.field input,
 textarea,
 select {
     border-radius: 5px;
@@ -37,15 +41,37 @@ select {
     width: 80%;
 }   
 
-#tea-form input[type=submit] {
+.invalid input,
+.invalid textarea {
+    border: 1px solid #b62e2e;
+    background-color: #e6b9b9;
+}
+
+.invalid label {
+    color: #b62e2e;
+    font-weight: 700;
+}
+
+.errorlist {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #b62e2e;
+    font-weight: 700;
+}
+
+#submit_button {
     display: block;
     margin: 0 auto;
     width: 150px;
     height: 50px;
     font-size: 16px;
+    border-radius: 5px;
     border: 1px solid #6b6b6b;
 }
 
-#tea-form input[type=submit]:hover {
+#submit_button:hover {
     border: 1px solid #84a8e9;
 }

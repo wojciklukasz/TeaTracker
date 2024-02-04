@@ -12,36 +12,38 @@
         <h1>Nowa herbata</h1>
         <form method="post" id="tea-form">
             {% csrf_token %}
+            {% if form.errors %}
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+            {% endif %}
             <div id="short-fields">
                 <div class='column'>
                     {% for field in form.visible_fields|slice:":6" %}
-                        <p>
-                            {{ field.errors }}
+                        <div class="field {% if field.errors %}invalid{% endif %}">
                             {{ field.label_tag }}
                             {{ field }}
-                        </p>
+                        </div>
                     {% endfor %}
                 </div>
                 <div class='column'>
                     {% for field in form.visible_fields|slice:"6:-4" %}
-                        <p>
-                            {{ field.errors }}
+                        <div class="field {% if field.errors %}invalid{% endif %}">
                             {{ field.label_tag }}
                             {{ field }}
-                        </p>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
             <div id="long-fields">
                 {% for field in form.visible_fields|slice:"-4:" %}
-                    <p>
-                        {{ field.errors }}
+                    <div class="field {% if field.errors %}invalid{% endif %}">
                         {{ field.label_tag }}
                         {{ field }}
-                    </p>
+                    </div>
                 {% endfor %}
             </div>
-            <input type="submit" value="Dodaj">
+            <input id="submit_button" type="submit" value="Dodaj">
         </form>
     </main>
 {% endblock %}
