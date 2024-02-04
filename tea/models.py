@@ -61,7 +61,7 @@ class Region(models.Model):
 
 
 class Tea(models.Model):
-    SEASON_CHOICES = [('W', 'Wiosna'), ('L', 'Lato'), ('J', 'Jesien'), ('Z', 'Zima')]
+    SEASON_CHOICES = [('W', 'Wiosna'), ('L', 'Lato'), ('J', 'Jesień'), ('Z', 'Zima')]
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
