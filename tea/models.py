@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -15,7 +15,7 @@ class Profile(models.Model):
 
 class Store(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('Nazwa'))
-    website = models.URLField(verbose_name=_('Strona internetowa'))
+    website = models.URLField(unique=True, verbose_name=_('Strona internetowa'))
 
     def __str__(self) -> str:
         return self.name
