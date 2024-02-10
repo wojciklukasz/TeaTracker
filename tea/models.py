@@ -6,14 +6,14 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 
 class Store(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     website = models.URLField()
 
     def __str__(self) -> str:
@@ -21,14 +21,14 @@ class Store(models.Model):
 
 
 class Type(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 
 class Cultivar(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self) -> str:
         return self.name
@@ -38,14 +38,14 @@ class Country(models.Model):
     class Meta:
         verbose_name_plural = 'Countries'
 
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 
 class Province(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -53,7 +53,7 @@ class Province(models.Model):
 
 
 class Region(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     province = models.ForeignKey(Province, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
