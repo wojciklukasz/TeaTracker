@@ -85,8 +85,7 @@ class CreateTeaTestCase(TestCase):
             },
         )
 
-        # print(response.content)
-        # self.assertContains(response, '<ul class="errorlist">', html=True)
+        self.assertContains(response, '<ul class="errorlist">')
         self.assertContains(response, 'Rok nie zgadza się z datą zbiorów!')
 
     def test_future_dates(self):
@@ -101,8 +100,7 @@ class CreateTeaTestCase(TestCase):
             },
         )
 
-        # print(response.content)
-        # self.assertContains(response, '<ul class="errorlist">', html=True)
+        self.assertContains(response, '<ul class="errorlist">')
         self.assertContains(response, 'Rok produkcji jest większy niż aktualny rok!')
         self.assertContains(response, 'Data zbiorów jest w przyszłości!')
 
