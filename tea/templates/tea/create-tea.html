@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/create-tea.css" %}">
+{% endblock %}
+
+{% block title %}Nowa herbata{% endblock title %}
+
+{% block content %}
+    <main id='main-content'>
+        <h1>Nowa herbata</h1>
+        <form method="post" id="tea-form">
+            {% csrf_token %}
+            {% if form.errors %}
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+            {% endif %}
+            <div id="short-fields">
+                <div class='column'>
+                    {% for field in form.visible_fields|slice:":6" %}
+                        <div class="field{% if field.errors %} invalid{% endif %}">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class='column'>
+                    {% for field in form.visible_fields|slice:"6:-4" %}
+                        <div class="field{% if field.errors %} invalid{% endif %}">
+                            {{ field.label_tag }}
+                            <div class="field-with-plus">
+                                {{ field }}
+                                <a href="{% url "create-"|add:field.html_name %}" class="plus-href">
+                                    <img class="plus-icon" src="{% static "images/plus_icon.svg" %}" alt="Biały plus z zielonym tłem"/>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="long-fields">
+                {% for field in form.visible_fields|slice:"-4:" %}
+                    <div class="field{% if field.errors %} invalid{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <input id="submit_button" type="submit" value="Dodaj">
+        </form>
+    </main>
+{% endblock %}

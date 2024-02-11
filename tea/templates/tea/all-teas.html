@@ -14,7 +14,7 @@
             <ul id="all-teas-list">
                 {% for tea in teas %}
                     <li>
-                        <a href="{{ tea.slug }}">
+                        <a href="{% url "tea-detail" slug=tea.slug %}">
                             {% if tea.image_set.first.image.url %}
                                 <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
                             {% else %}
