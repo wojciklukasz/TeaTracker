@@ -9,14 +9,6 @@ from . import models
 class TeaForm(forms.ModelForm):
     class Meta:
         model = models.Tea
-        exclude = [
-            'profile',
-            'slug',
-            'score',
-            'date_added',
-            'last_viewed',
-            'date_finished',
-        ]
         fields = [
             'name',
             'price_per_100_grams',
