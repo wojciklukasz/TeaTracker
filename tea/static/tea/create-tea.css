@@ -1,0 +1,96 @@
+#main-content h1 {
+    text-align: center;
+}
+
+#short-fields {
+    display: flex;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#long-fields {
+    text-align: center;
+}
+
+.column {
+    margin: auto;
+    width: 35%;
+}
+
+#tea-form {
+    margin: auto;
+    width: 50%;
+}
+
+#tea-form label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10%;
+}
+
+.field {
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+.field input,
+textarea,
+select {
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    width: 80%;
+}   
+
+.invalid input,
+.invalid textarea {
+    border: 1px solid #b62e2e;
+    background-color: #e6b9b9;
+}
+
+.invalid label {
+    color: #b62e2e;
+    font-weight: 700;
+}
+
+.errorlist {
+    list-style: none;
+    margin: 0 0 2rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #b62e2e;
+    font-weight: 700;
+}
+
+#submit_button {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+}
+
+#submit_button:hover {
+    border: 1px solid #84a8e9;
+}
+
+.plus-href {
+    height: 18px;
+    width: 18px;
+    margin-left: 5px;
+}
+
+.plus-icon {
+    height: 18px;
+    width: 18px;
+}
+
+.field-with-plus {
+    display: flex;
+    align-items: center;
+    padding: 3px 0px 2px 10%;
+}
