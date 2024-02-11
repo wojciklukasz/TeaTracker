@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -78,7 +78,7 @@ class StoreCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowy sklep'
         return context
@@ -90,7 +90,7 @@ class TypeCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowy typ herbaty'
         return context
@@ -102,7 +102,7 @@ class CultivarCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowy kultywar'
         return context
@@ -114,7 +114,7 @@ class CountryCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowy kraj'
         return context
@@ -126,7 +126,7 @@ class ProvinceCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowa prowincja'
         return context
@@ -138,7 +138,7 @@ class RegionCreateView(CreateView):
     template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Nowy region'
         return context
