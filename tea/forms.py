@@ -1,5 +1,7 @@
+from _tations
+_future__ import anno
 from datetime import date
-from typing import Any
+from typing import Any, Dict
 
 from django import forms
 
@@ -34,7 +36,7 @@ class TeaForm(forms.ModelForm):
             ),
         }
 
-    def clean(self) -> dict[str, Any]:
+    def clean(self) -> Dict[str, Any]:
         cleaned_data = super(TeaForm, self).clean()
 
         harvest_year = (
