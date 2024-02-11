@@ -7,6 +7,12 @@ from tea import models
 
 
 class CreateTeaTestCase(TestCase):
+    default_tea = {
+        'name': 'Test Tea',
+        'price_per_100_grams': '1',
+        'grams_left': '1',
+    }
+
     @classmethod
     def setUpTestData(cls) -> None:
         models.Profile.objects.create(name='default')
@@ -18,13 +24,12 @@ class CreateTeaTestCase(TestCase):
         self.assertContains(response, '<h1>Nowa herbata</h1>', html=True)
 
     def test_incorrect_form(self):
+        test_tea = self.default_tea.copy()
+        test_tea['name'] = ''
+
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': '',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-            },
+            data=test_tea,
         )
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -33,11 +38,7 @@ class CreateTeaTestCase(TestCase):
     def test_valid_form(self):
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-            },
+            data=self.default_tea,
         )
 
         self.assertRedirects(
@@ -50,20 +51,12 @@ class CreateTeaTestCase(TestCase):
     def test_slug_creation(self):
         self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-            },
+            data=self.default_tea,
         )
 
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-            },
+            data=self.default_tea,
         )
 
         self.assertRedirects(
@@ -74,30 +67,26 @@ class CreateTeaTestCase(TestCase):
         )
 
     def test_unequal_dates(self):
+        test_tea = self.default_tea.copy()
+        test_tea['harvest_date'] = '2022-01-01'
+        test_tea['year'] = '2023'
+
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-                'harvest_date': '2022-01-01',
-                'year': '2023',
-            },
+            data=test_tea,
         )
 
         self.assertContains(response, '<ul class="errorlist">')
         self.assertContains(response, 'Rok nie zgadza się z datą zbiorów!')
 
     def test_future_dates(self):
+        test_tea = self.default_tea.copy()
+        test_tea['harvest_date'] = '2025-01-01'
+        test_tea['year'] = '2025'
+
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-                'harvest_date': '2025-01-01',
-                'year': '2025',
-            },
+            data=test_tea,
         )
 
         self.assertContains(response, '<ul class="errorlist">')
@@ -128,14 +117,12 @@ class CreateTeaTestCase(TestCase):
             target_status_code=HTTPStatus.OK,
         )
 
+        test_tea = self.default_tea.copy()
+        test_tea['cultivar'] = models.Cultivar.objects.get(name='Test Cultivar').id
+
         response = self.client.post(
             reverse_lazy('create-tea'),
-            data={
-                'name': 'Test Tea',
-                'price_per_100_grams': '1',
-                'grams_left': '1',
-                'cultivar': models.Cultivar.objects.get(name='Test Cultivar').id,
-            },
+            data=test_tea,
         )
 
         self.assertRedirects(
