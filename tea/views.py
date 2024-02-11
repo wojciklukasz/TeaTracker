@@ -12,6 +12,8 @@ from . import forms, models
 
 # Create your views here.
 
+generic_template = 'tea/create-others.html'
+
 
 class MainPageView(ListView):
     template_name = 'tea/main-page.html'
@@ -73,7 +75,7 @@ class TeaCreateView(CreateView):
 class StoreCreateView(CreateView):
     model = models.Store
     form_class = forms.StoreForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -85,7 +87,7 @@ class StoreCreateView(CreateView):
 class TypeCreateView(CreateView):
     model = models.Type
     form_class = forms.TypeForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -97,7 +99,7 @@ class TypeCreateView(CreateView):
 class CultivarCreateView(CreateView):
     model = models.Cultivar
     form_class = forms.CultivarForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -109,7 +111,7 @@ class CultivarCreateView(CreateView):
 class CountryCreateView(CreateView):
     model = models.Country
     form_class = forms.CountryForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -121,7 +123,7 @@ class CountryCreateView(CreateView):
 class ProvinceCreateView(CreateView):
     model = models.Province
     form_class = forms.ProvinceForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -133,7 +135,7 @@ class ProvinceCreateView(CreateView):
 class RegionCreateView(CreateView):
     model = models.Region
     form_class = forms.RegionForm
-    template_name = 'tea/create-others.html'
+    template_name = generic_template
     success_url = reverse_lazy('create-tea')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
