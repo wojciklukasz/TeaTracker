@@ -3,12 +3,12 @@ from typing import Any
 
 from django import forms
 
-from .models import Tea
+from . import models
 
 
 class TeaForm(forms.ModelForm):
     class Meta:
-        model = Tea
+        model = models.Tea
         exclude = [
             'profile',
             'slug',
@@ -17,37 +17,19 @@ class TeaForm(forms.ModelForm):
             'last_viewed',
             'date_finished',
         ]
-        labels = {
-            'name': 'Nazwa',
-            'store': 'Sklep',
-            'price_per_100_grams': 'Cena za 100 gramów',
-            'grams_left': 'Pozostało gramów',
-            'store_description': 'Opis sprzedawcy',
-            'user_description': 'Opis użytkownika',
-            'tasting_notes': 'Nuty smakowe',
-            'additional_notes': 'Dodatkowe uwagi',
-            'country': 'Kraj',
-            'province': 'Prowincja',
-            'region': 'Region',
-            'type': 'Typ herbaty',
-            'cultivar': 'Kultywar',
-            'season': 'Sezon',
-            'year': 'Rok',
-            'harvest_date': 'Data zbiorów',
-        }
         fields = [
             'name',
             'price_per_100_grams',
             'grams_left',
-            'store',
-            'country',
-            'province',
-            'region',
-            'type',
-            'cultivar',
             'season',
             'year',
             'harvest_date',
+            'store',
+            'type',
+            'cultivar',
+            'country',
+            'province',
+            'region',
             'store_description',
             'user_description',
             'tasting_notes',
@@ -81,3 +63,39 @@ class TeaForm(forms.ModelForm):
             self.add_error('year', 'Rok nie zgadza się z datą zbiorów!')
 
         return cleaned_data
+
+
+class StoreForm(forms.ModelForm):
+    class Meta:
+        model = models.Store
+        exclude = []
+
+
+class TypeForm(forms.ModelForm):
+    class Meta:
+        model = models.Type
+        exclude = []
+
+
+class CultivarForm(forms.ModelForm):
+    class Meta:
+        model = models.Cultivar
+        exclude = []
+
+
+class CountryForm(forms.ModelForm):
+    class Meta:
+        model = models.Country
+        exclude = []
+
+
+class ProvinceForm(forms.ModelForm):
+    class Meta:
+        model = models.Province
+        exclude = []
+
+
+class RegionForm(forms.ModelForm):
+    class Meta:
+        model = models.Region
+        exclude = []
