@@ -111,9 +111,8 @@ class CreateTeaTestCase(TestCase):
 
         self.assertContains(
             response,
-            '<img class="plus-icon" src="/static/images/plus_icon.svg" alt="Biały plus z zielonym tłem">',
+            'class="plus-href"',
             6,
-            html=True,
         )
 
     def test_create_cultivar(self):
