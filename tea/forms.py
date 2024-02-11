@@ -68,34 +68,34 @@ class TeaForm(forms.ModelForm):
 class StoreForm(forms.ModelForm):
     class Meta:
         model = models.Store
-        exclude = []
+        fields = '__all__'
 
 
 class TypeForm(forms.ModelForm):
     class Meta:
         model = models.Type
-        exclude = []
+        fields = '__all__'
 
 
 class CultivarForm(forms.ModelForm):
     class Meta:
         model = models.Cultivar
-        exclude = []
+        fields = '__all__'
 
 
 class CountryForm(forms.ModelForm):
     class Meta:
         model = models.Country
-        exclude = []
+        fields = '__all__'
 
 
 class ProvinceForm(forms.ModelForm):
     class Meta:
         model = models.Province
-        exclude = []
+        fields = '__all__'
 
 
 class RegionForm(forms.ModelForm):
     class Meta:
         model = models.Region
-        exclude = []
+        fields = '__all__'
