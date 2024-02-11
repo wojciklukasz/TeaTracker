@@ -103,10 +103,12 @@ class CreateTeaTestCase(TestCase):
         )
 
     def test_create_cultivar(self):
+        cultivar_name = 'Test Cultivar'
+
         response = self.client.post(
             reverse_lazy('create-cultivar'),
             data={
-                'name': 'Test Cultivar',
+                'name': cultivar_name,
             },
         )
 
@@ -118,7 +120,7 @@ class CreateTeaTestCase(TestCase):
         )
 
         test_tea = self.default_tea.copy()
-        test_tea['cultivar'] = models.Cultivar.objects.get(name='Test Cultivar').id
+        test_tea['cultivar'] = models.Cultivar.objects.get(name=cultivar_name).id
 
         response = self.client.post(
             reverse_lazy('create-tea'),
@@ -136,4 +138,4 @@ class CreateTeaTestCase(TestCase):
             reverse_lazy('tea-detail', kwargs={'slug': 'test-tea'})
         )
 
-        self.assertContains(response, 'Test Cultivar')
+        self.assertContains(response, cultivar_name)
