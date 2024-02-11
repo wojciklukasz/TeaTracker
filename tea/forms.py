@@ -60,34 +60,34 @@ class TeaForm(forms.ModelForm):
 class StoreForm(forms.ModelForm):
     class Meta:
         model = models.Store
-        fields = '__all__'
+        fields = ['name', 'website']
 
 
 class TypeForm(forms.ModelForm):
     class Meta:
         model = models.Type
-        fields = '__all__'
+        fields = ['name']
 
 
 class CultivarForm(forms.ModelForm):
     class Meta:
         model = models.Cultivar
-        fields = '__all__'
+        fields = ['name']
 
 
 class CountryForm(forms.ModelForm):
     class Meta:
         model = models.Country
-        fields = '__all__'
+        fields = ['name']
 
 
 class ProvinceForm(forms.ModelForm):
     class Meta:
         model = models.Province
-        fields = '__all__'
+        fields = ['name', 'country']
 
 
 class RegionForm(forms.ModelForm):
     class Meta:
         model = models.Region
-        fields = '__all__'
+        fields = ['name', 'province']
