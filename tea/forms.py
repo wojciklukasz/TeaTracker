@@ -8,6 +8,18 @@ from django import forms
 from . import models
 
 
+class ProfileSelectForm(forms.ModelForm):
+    class Meta:
+        model = models.Tea
+        fields = ['profile']
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = models.Profile
+        fields = ['name']
+
+
 class TeaForm(forms.ModelForm):
     class Meta:
         model = models.Tea

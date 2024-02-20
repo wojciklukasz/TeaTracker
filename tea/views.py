@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 
 from . import forms, models
 
@@ -35,6 +35,19 @@ class MainPageView(ListView):
         }
 
         return queryset_dict
+
+
+class ProfileSelectView(FormView):
+    model = models.Profile
+    template_name = 'tea/profile.html'
+    form_class = forms.ProfileSelectForm
+
+
+class ProfileCreateView(CreateView):
+    model = models.Profile
+    template_name = generic_template
+    form_class = forms.ProfileForm
+    success_url = reverse_lazy('profile-select')
 
 
 class TeaDetailView(DetailView):

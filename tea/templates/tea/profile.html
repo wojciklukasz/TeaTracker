@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/profile.css" %}">
+{% endblock %}
+
+{% block title %}Wybierz profil{% endblock title %}
+
+{% block content %}
+    <main id='main-content'>
+        <h1>Wybierz profil</h1>
+        <p>Aktualny profil: {{ current_profile }}</p>
+        <form method="post" id="profile-select">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <input class="big-button" type="submit" value="Wybierz">
+        </form>
+        <a href="{% url "create-profile" %}" class="new-href">
+            <button class="big-button">Dodaj nowy profil</button>
+        </a>
+    </main>
+{% endblock %}
