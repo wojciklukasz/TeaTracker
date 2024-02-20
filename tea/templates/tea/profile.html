@@ -10,7 +10,12 @@
 {% block content %}
     <main id='main-content'>
         <h1>Wybierz profil</h1>
-        <p>Aktualny profil: {{ current_profile }}</p>
+        {% if current_profile == None %}
+            <p>Aktualnie nie wybrano żadnego profilu!</p>
+            <P>Wybierz profil, aby móc kontynuować lub utwórz nowy.</p>
+        {% else %}
+            <p>Aktualny profil: {{ current_profile }}</p>
+        {% endif %}
         <form method="post" id="profile-select">
             {% csrf_token %}
             {% for field in form.visible_fields %}
