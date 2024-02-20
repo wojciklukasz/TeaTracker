@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Profile(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name=_('Nazwa'))
 
     def __str__(self) -> str:
         return self.name
