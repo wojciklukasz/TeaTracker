@@ -99,6 +99,10 @@ class AllTeasView(ListView):
             return redirect('profile-select')
         return super().dispatch(request, *args, **kwargs)
 
+    def get_queryset(self) -> QuerySet[Any]:
+        querryset = super().get_queryset()
+        return querryset.filter(profile__id=self.request.session.get('profile_id'))
+
 
 class TeaCreateView(CreateView):
     model = models.Tea
