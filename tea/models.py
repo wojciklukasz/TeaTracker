@@ -68,7 +68,9 @@ class Region(models.Model):
 class Tea(models.Model):
     SEASON_CHOICES = [('W', 'Wiosna'), ('L', 'Lato'), ('J', 'Jesień'), ('Z', 'Zima')]
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, verbose_name=_('Profil')
+    )
     name = models.CharField(max_length=100, verbose_name=_('Nazwa'))
     slug = models.SlugField(unique=True)
     store = models.ForeignKey(
