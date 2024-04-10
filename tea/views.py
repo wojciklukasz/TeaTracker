@@ -15,32 +15,32 @@ from . import forms, models
 
 # Create your views here.
 
-generic_template = 'tea/create-others.html'
+generic_template = "tea/create-others.html"
 
 
 class MainPageView(ListView):
-    template_name = 'tea/main-page.html'
+    template_name = "tea/main-page.html"
     model = models.Tea
-    context_object_name = 'teas'
-    ordering = ['-date_added']
+    context_object_name = "teas"
+    ordering = ["-date_added"]
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
-        queryset = queryset.filter(profile__id=self.request.session.get('profile_id'))
+        queryset = queryset.filter(profile__id=self.request.session.get("profile_id"))
         queryset_recent = queryset[:3]
         queryset_random = self.model.objects.filter(
-            profile__id=self.request.session.get('profile_id')
-        ).order_by('?')[:3]
-        queryset_last_viewed = queryset.order_by('-last_viewed')[:3]
+            profile__id=self.request.session.get("profile_id")
+        ).order_by("?")[:3]
+        queryset_last_viewed = queryset.order_by("-last_viewed")[:3]
         queryset_dict = {
-            'recent': queryset_recent,
-            'random': queryset_random,
-            'last_viewed': queryset_last_viewed,
+            "recent": queryset_recent,
+            "random": queryset_random,
+            "last_viewed": queryset_last_viewed,
         }
 
         return queryset_dict
@@ -48,21 +48,21 @@ class MainPageView(ListView):
 
 class ProfileSelectView(FormView):
     model = models.Profile
-    template_name = 'tea/profile.html'
+    template_name = "tea/profile.html"
     form_class = forms.ProfileSelectForm
-    success_url = reverse_lazy('main-page')
+    success_url = reverse_lazy("main-page")
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        if not self.request.session.get('profile_id'):
-            context['current_profile'] = None
+        if not self.request.session.get("profile_id"):
+            context["current_profile"] = None
         else:
-            profile_id = self.request.session.get('profile_id')
-            context['current_profile'] = models.Profile.objects.get(id=profile_id)
+            profile_id = self.request.session.get("profile_id")
+            context["current_profile"] = models.Profile.objects.get(id=profile_id)
         return context
 
     def form_valid(self, form):
-        self.request.session['profile_id'] = form.cleaned_data['profile'].id
+        self.request.session["profile_id"] = form.cleaned_data["profile"].id
         return super().form_valid(form)
 
 
@@ -70,48 +70,48 @@ class ProfileCreateView(CreateView):
     model = models.Profile
     template_name = generic_template
     form_class = forms.ProfileForm
-    success_url = reverse_lazy('profile-select')
+    success_url = reverse_lazy("profile-select")
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy profil'
+        context["page_title"] = "Nowy profil"
         return context
 
 
 class TeaDetailView(DetailView):
     model = models.Tea
-    template_name = 'tea/tea-detail.html'
+    template_name = "tea/tea-detail.html"
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
 
 class AllTeasView(ListView):
-    template_name = 'tea/all-teas.html'
+    template_name = "tea/all-teas.html"
     model = models.Tea
-    context_object_name = 'teas'
-    ordering = ['-date_added']
+    context_object_name = "teas"
+    ordering = ["-date_added"]
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self) -> QuerySet[Any]:
         querryset = super().get_queryset()
-        return querryset.filter(profile__id=self.request.session.get('profile_id'))
+        return querryset.filter(profile__id=self.request.session.get("profile_id"))
 
 
 class TeaCreateView(CreateView):
     model = models.Tea
     form_class = forms.TeaForm
-    template_name = 'tea/create-tea.html'
+    template_name = "tea/create-tea.html"
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form: forms.TeaForm) -> HttpResponse:
@@ -119,15 +119,15 @@ class TeaCreateView(CreateView):
 
         slug = slugify(form.instance.name)
         if self.model.objects.filter(name=form.instance.name):
-            slug = slug + f'-{len(self.model.objects.filter(name=form.instance.name))}'
+            slug = slug + f"-{len(self.model.objects.filter(name=form.instance.name))}"
 
         form.instance.profile = profile
         form.instance.slug = slug
 
         self.success_url = reverse_lazy(
-            'tea-detail',
+            "tea-detail",
             kwargs={
-                'slug': slug,
+                "slug": slug,
             },
         )
 
@@ -138,16 +138,16 @@ class StoreCreateView(CreateView):
     model = models.Store
     form_class = forms.StoreForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy sklep'
+        context["page_title"] = "Nowy sklep"
         return context
 
 
@@ -155,16 +155,16 @@ class TypeCreateView(CreateView):
     model = models.Type
     form_class = forms.TypeForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy typ herbaty'
+        context["page_title"] = "Nowy typ herbaty"
         return context
 
 
@@ -172,16 +172,16 @@ class CultivarCreateView(CreateView):
     model = models.Cultivar
     form_class = forms.CultivarForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy kultywar'
+        context["page_title"] = "Nowy kultywar"
         return context
 
 
@@ -189,16 +189,16 @@ class CountryCreateView(CreateView):
     model = models.Country
     form_class = forms.CountryForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy kraj'
+        context["page_title"] = "Nowy kraj"
         return context
 
 
@@ -206,16 +206,16 @@ class ProvinceCreateView(CreateView):
     model = models.Province
     form_class = forms.ProvinceForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowa prowincja'
+        context["page_title"] = "Nowa prowincja"
         return context
 
 
@@ -223,14 +223,14 @@ class RegionCreateView(CreateView):
     model = models.Region
     form_class = forms.RegionForm
     template_name = generic_template
-    success_url = reverse_lazy('create-tea')
+    success_url = reverse_lazy("create-tea")
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get('profile_id'):
-            return redirect('profile-select')
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Nowy region'
+        context["page_title"] = "Nowy region"
         return context
