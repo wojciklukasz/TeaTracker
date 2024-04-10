@@ -27,7 +27,7 @@
 .field select {
     border-radius: 5px;
     border: 1px solid #6b6b6b;
-    min-width: 25rem;
+    min-width: 20rem;
 }
 
 .big-button {
