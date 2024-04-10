@@ -9,6 +9,10 @@ main {
     font-weight: 600;
 }
 
+#main-content p {
+    text-align: center;
+}
+
 #main-content ul {
     list-style-type: none;
     display: flex;

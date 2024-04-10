@@ -7,19 +7,19 @@ from . import models
 
 class TeaAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'type',
-        'year',
-        'country',
-        'store',
+        "name",
+        "type",
+        "year",
+        "country",
+        "store",
     )
     list_filter = (
-        'type',
-        'year',
-        'country',
-        'store',
+        "type",
+        "year",
+        "country",
+        "store",
     )
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(models.Profile)

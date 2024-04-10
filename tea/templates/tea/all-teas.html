@@ -10,21 +10,26 @@
 {% block content %}
     <main id="main-content">
         <article id="all-teas">
-            <h2>Lista herbat</h2>
-            <ul id="all-teas-list">
-                {% for tea in teas %}
-                    <li>
-                        <a href="{% url "tea-detail" slug=tea.slug %}">
-                            {% if tea.image_set.first.image.url %}
-                                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
-                            {% else %}
-                                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
-                            {% endif %}
-                            <h3>{{ tea.name }}</h3>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% if teas %}
+                <h2>Lista herbat</h2>
+                <ul id="all-teas-list">
+                    {% for tea in teas %}
+                        <li>
+                            <a href="{% url "tea-detail" slug=tea.slug %}">
+                                {% if tea.image_set.first.image.url %}
+                                    <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                                {% else %}
+                                    <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                                {% endif %}
+                                <h3>{{ tea.name }}</h3>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Brak herbat w bazie danych!</p>
+                <p>Możesz dodać nową herbatę przyciskiem w górnym pasku.</p>
+            {% endif %}
         </article>
     </main>
 {% endblock  %}
