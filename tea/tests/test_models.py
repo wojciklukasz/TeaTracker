@@ -33,11 +33,6 @@ class TeaTestCase(TestCase):
             harvest_date=datetime(2023, 3, 25),
         )
 
-    def setUp(self) -> None:
-        session = self.client.session
-        session["profile_id"] = Profile.objects.get(name="default").id
-        session.save()
-
     def test_country_str(self):
         country = Country.objects.get(id=1)
         self.assertEqual(str(country), "Chiny")
