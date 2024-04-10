@@ -14,6 +14,7 @@ class Profile(models.Model):
 
     class Meta:
         verbose_name = _("Profil")
+        verbose_name_plural = _("Profile")
 
 
 class Store(models.Model):
@@ -23,12 +24,20 @@ class Store(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        verbose_name = _("Sklep")
+        verbose_name_plural = _("Sklepy")
+
 
 class Type(models.Model):
     name = models.CharField(max_length=25, unique=True, verbose_name=_("Nazwa"))
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        verbose_name = _("Typ herbaty")
+        verbose_name_plural = _("Typy herbaty")
 
 
 class Cultivar(models.Model):
@@ -37,15 +46,20 @@ class Cultivar(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        verbose_name = _("Kultywar")
+        verbose_name_plural = _("Kultywary")
+
 
 class Country(models.Model):
-    class Meta:
-        verbose_name_plural = "Countries"
-
     name = models.CharField(max_length=25, unique=True, verbose_name=_("Nazwa"))
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        verbose_name = _("Kraj")
+        verbose_name_plural = _("Kraje")
 
 
 class Province(models.Model):
@@ -57,6 +71,10 @@ class Province(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        verbose_name = _("Prowincja")
+        verbose_name_plural = _("Prowincje")
+
 
 class Region(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_("Nazwa"))
@@ -66,6 +84,10 @@ class Region(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        verbose_name = _("Region")
+        verbose_name_plural = _("Regiony")
 
 
 class Tea(models.Model):
@@ -150,6 +172,10 @@ class Tea(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        verbose_name = _("Herbata")
+        verbose_name_plural = _("Herbaty")
+
 
 class Image(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
@@ -157,6 +183,10 @@ class Image(models.Model):
 
     def __str__(self) -> str:
         return f"{self.id} - {self.tea.name}"
+
+    class Meta:
+        verbose_name = _("Zdjęcie")
+        verbose_name_plural = _("Zdjęcia")
 
 
 class Brew(models.Model):
@@ -167,6 +197,10 @@ class Brew(models.Model):
     def __str__(self) -> str:
         return f"{self.tea.name} {self.brew_date}"
 
+    class Meta:
+        verbose_name = _("Parzenie")
+        verbose_name_plural = _("Parzenia")
+
 
 class BrewImage(models.Model):
     brew = models.ForeignKey(Brew, on_delete=models.CASCADE)
@@ -174,3 +208,7 @@ class BrewImage(models.Model):
 
     def __str__(self) -> str:
         return f"{self.id} - {self.brew.brew_date} - {self.brew.tea}"
+
+    class Meta:
+        verbose_name = _("Zdjęcie parzenia")
+        verbose_name_plural = _("Zdjęcia parzeń")
