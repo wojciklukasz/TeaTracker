@@ -6,6 +6,8 @@ from . import views
 
 urlpatterns = [
     path('', views.MainPageView.as_view(), name='main-page'),
+    path('profil', views.ProfileSelectView.as_view(), name='profile-select'),
+    path('profil/dodaj', views.ProfileCreateView.as_view(), name='create-profile'),
     path('herbaty', views.AllTeasView.as_view(), name='all-teas'),
     path('herbaty/dodaj', views.TeaCreateView.as_view(), name='create-tea'),
     path('herbaty/dodaj/sklep', views.StoreCreateView.as_view(), name='create-store'),
