@@ -6,6 +6,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.text import slugify
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -86,6 +87,14 @@ class TeaDetailView(DetailView):
         if not request.session.get("profile_id"):
             return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
+
+    def get(
+        self, request: HttpRequest, slug: str, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
+        tea = models.Tea.objects.get(slug=slug)
+        tea.last_viewed = timezone.now()
+        tea.save()
+        return super().get(request, *args, **kwargs)
 
 
 class AllTeasView(ListView):
