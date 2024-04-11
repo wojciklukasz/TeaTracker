@@ -8,6 +8,19 @@
     margin-bottom: 1rem;
 }
 
+#above-details {
+    display: flex;
+}
+
+#update-button {
+    text-decoration: none;
+    color: #2e2e2e;
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    padding: 5px;
+    margin-left: 5rem;
+}
+
 #details {
     display: flex;
 }

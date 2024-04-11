@@ -6,10 +6,11 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.text import slugify
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 
 from . import forms, models
 
@@ -78,16 +79,6 @@ class ProfileCreateView(CreateView):
         return context
 
 
-class TeaDetailView(DetailView):
-    model = models.Tea
-    template_name = "tea/tea-detail.html"
-
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if not request.session.get("profile_id"):
-            return redirect("profile-select")
-        return super().dispatch(request, *args, **kwargs)
-
-
 class AllTeasView(ListView):
     template_name = "tea/all-teas.html"
     model = models.Tea
@@ -104,10 +95,33 @@ class AllTeasView(ListView):
         return querryset.filter(profile__id=self.request.session.get("profile_id"))
 
 
+class TeaDetailView(DetailView):
+    model = models.Tea
+    template_name = "tea/tea-detail.html"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(
+        self, request: HttpRequest, slug: str, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
+        tea = models.Tea.objects.get(slug=slug)
+        tea.last_viewed = timezone.now()
+        tea.save()
+        return super().get(request, *args, **kwargs)
+
+
 class TeaCreateView(CreateView):
     model = models.Tea
     form_class = forms.TeaForm
     template_name = "tea/create-tea.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Dodaj"
+        return context
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if not request.session.get("profile_id"):
@@ -132,6 +146,38 @@ class TeaCreateView(CreateView):
         )
 
         return super().form_valid(form)
+
+
+class TeaUpdateView(UpdateView):
+    model = models.Tea
+    template_name = "tea/create-tea.html"
+    fields = [
+        "name",
+        "price_per_100_grams",
+        "grams_left",
+        "season",
+        "year",
+        "harvest_date",
+        "store",
+        "type",
+        "cultivar",
+        "country",
+        "province",
+        "region",
+        "store_description",
+        "user_description",
+        "tasting_notes",
+        "additional_notes",
+    ]
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Zapisz zmiany"
+        return context
+
+    def get_success_url(self) -> str:
+        print(self.object.slug)
+        return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
 
 
 class StoreCreateView(CreateView):

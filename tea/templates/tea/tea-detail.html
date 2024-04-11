@@ -10,16 +10,20 @@
 {% block content %}
     <main id='details-main'>
         <h1>{{ tea.name }}</h1>
-        <section id="cultivar">
-            <p><b>Kultywar:</b>
-            {% if tea.cultivar %}
-                {{ tea.cultivar }}
-            {% else %}
-                Brak danych
-            {% endif %}
-            </p>
-        </section>
-        <div id='details'>
+        <div id="above-details">
+            <section id="cultivar">
+                <p><b>Kultywar:</b>
+                {% if tea.cultivar %}
+                    {{ tea.cultivar }}
+                {% else %}
+                    Brak danych
+                {% endif %}
+                </p>
+            </section>
+            <section id="update">
+                <a href="{% url "tea-update" slug=tea.slug %}" id="update-button">Edytuj</a>
+        </div>
+        <div id="details">
             {% if tea.image_set.first.image.url %}
             <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
             {% else %}
