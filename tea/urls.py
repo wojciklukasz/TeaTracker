@@ -29,4 +29,7 @@ urlpatterns = [
         "herbaty/dodaj/region", views.RegionCreateView.as_view(), name="create-region"
     ),
     path("herbaty/<slug:slug>", views.TeaDetailView.as_view(), name="tea-detail"),
+    path(
+        "herbaty/<slug:slug>/edytuj", views.TeaUpdateView.as_view(), name="tea-update"
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
