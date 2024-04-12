@@ -15,6 +15,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+
+class MissingEnvironmentVariable(Exception):
+    pass
+
+
 if os.getenv("IS_DEV", "True") == "True":
     load_dotenv()
 
@@ -26,6 +31,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+if not os.getenv("DJANGO_SECRET_KEY"):
+    raise MissingEnvironmentVariable("DJANGO_SECRET_KEY is not set!")
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
