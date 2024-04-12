@@ -5,5 +5,4 @@ services:
     ports:
       - 8000:8000
     environment:
-      - IS_DEV=False
       - DJANGO_SECRET_KEY=set_your_key_here
