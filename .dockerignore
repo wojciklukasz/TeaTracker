@@ -1,0 +1,15 @@
+# Generic
+.env
+.git
+.gitignore
+.github
+README.md
+
+# Database
+db.sqlite3
+uploads
+
+# Python
+__pycache__
+venv
+tea/tests
