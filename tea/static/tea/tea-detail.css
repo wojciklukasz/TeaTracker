@@ -1,43 +1,49 @@
-#details-main h1 {
-    color: #2e2e2e;
+p {
+    font-size: large;
+    margin: 0.5rem 2rem 0.5rem 0rem;
 }
 
-#cultivar p {
-    margin: 0;
-    margin-left: 0.5rem;
-    margin-bottom: 1rem;
+h2 {
+    margin-bottom: 0;
+    margin-top: 2rem;
+}
+
+#details-main {
+    color: #2e2e2e;
+    margin-left: 5rem;
 }
 
 #above-details {
     display: flex;
+    margin-bottom: 2rem;
 }
 
-#update-button {
+.button {
     text-decoration: none;
-    color: #2e2e2e;
+    color: #1f1f1f;
     border-radius: 5px;
     border: 1px solid #6b6b6b;
     padding: 5px;
-    margin-left: 5rem;
+    margin-left: 0.5rem;
 }
 
 #details {
     display: flex;
 }
 
+#details section {
+    margin-left: 0.25rem;
+}
+
 #text-grid {
-    display: grid;
+    align-content: center;
+    margin-left: 5rem;
+    width: 50%;
 }
 
 #dates {
     display: flex;
     justify-content: flex-start;
-}
-
-#dates p {
-    color: #2e2e2e;
-    font-size: large;
-    padding-left: 5rem;
 }
 
 #description {
@@ -46,23 +52,59 @@
 }
 
 #description p {
-    color: #2e2e2e;
-    font-size: large;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    max-width: 800px;
 }
 
-#description h2 {
-    color: #2e2e2e;
-    padding-left: 5rem;
+#images {
+    border: 1px solid #6d6c6c;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tea-image {
-    min-width: 30vw;
-    min-height: 50vh;
-    max-width: 30vw;
-    max-height: 50vh;
-    border: 1px solid #6d6c6c;
-    border-radius: 10px;
     object-fit: scale-down;
+    width: 99%;
+    height: 99%;
+    max-height: 75vh;
+    max-width: 30vw;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #6b6b6b;
+    width: 100%;
+    max-width: 850px;
+}
+  
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #6b6b6b;
+}
+  
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+  
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+@media screen and (max-width: 900px) {
+    #details-main {
+        margin: 0;
+    }
+    #details {
+        display: table;
+        width: 98%;
+    }
+    #text-grid {
+        margin: 0.5rem;
+        width: 100%;
+    }
 }
