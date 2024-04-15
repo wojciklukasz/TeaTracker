@@ -32,4 +32,9 @@ urlpatterns = [
     path(
         "herbaty/<slug:slug>/edytuj", views.TeaUpdateView.as_view(), name="tea-update"
     ),
+    path(
+        "herbaty/<slug:slug>/parzenia/dodaj",
+        views.BrewCreateView.as_view(),
+        name="create-brew",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -280,3 +280,13 @@ class RegionCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["page_title"] = "Nowy region"
         return context
+
+
+class BrewCreateView(CreateView):
+    model = models.Brew
+    form_class = forms.BrewForm
+    template_name = "tea/create-brew.html"
+
+    def get_success_url(self) -> str:
+        print(self.object.slug)
+        return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
