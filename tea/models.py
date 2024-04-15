@@ -193,6 +193,18 @@ class Brew(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     brew_date = models.DateField(auto_now_add=True)
     tasting_notes = models.TextField()
+    grams = models.FloatField(
+        validators=[MinValueValidator(0.1)],
+        null=True,
+        blank=True,
+        verbose_name=_("Gramy"),
+    )
+    water_ml = models.IntegerField(
+        validators=[MinValueValidator(1)],
+        null=True,
+        blank=True,
+        verbose_name=_("Ilość wody"),
+    )
 
     def __str__(self) -> str:
         return f"{self.tea.name} {self.brew_date}"
