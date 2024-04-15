@@ -192,7 +192,7 @@ class Image(models.Model):
 class Brew(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     brew_date = models.DateField(auto_now_add=True)
-    tasting_notes = models.TextField()
+    tasting_notes = models.TextField(verbose_name=_("Opis"))
     grams = models.FloatField(
         validators=[MinValueValidator(0.1)],
         null=True,
