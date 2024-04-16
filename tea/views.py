@@ -287,6 +287,11 @@ class BrewCreateView(CreateView):
     form_class = forms.BrewForm
     template_name = "tea/create-brew.html"
 
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self) -> str:
         print(self.object.slug)
         return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
