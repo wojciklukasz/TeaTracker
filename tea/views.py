@@ -293,14 +293,17 @@ class BrewCreateView(CreateView):
             return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
-    def get_success_url(self) -> str:
-        print(self.object.slug)
-        return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
-
     def form_valid(self, form: forms.BrewForm) -> HttpResponse:
         tea_slug = self.kwargs["slug"]
         tea = models.Tea.objects.get(slug=tea_slug)
 
         form.instance.tea = tea
+
+        self.success_url = reverse_lazy(
+            "tea-detail",
+            kwargs={
+                "slug": tea_slug,
+            },
+        )
 
         return super().form_valid(form)
