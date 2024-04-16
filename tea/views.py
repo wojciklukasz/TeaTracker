@@ -129,7 +129,8 @@ class TeaCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form: forms.TeaForm) -> HttpResponse:
-        profile = models.Profile.objects.get(id=1)
+        profile_id = self.request.session.get("profile_id")
+        profile = models.Profile.objects.get(id=profile_id)
 
         slug = slugify(form.instance.name)
         if self.model.objects.filter(name=form.instance.name):
