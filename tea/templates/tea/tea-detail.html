@@ -13,9 +13,9 @@
         <div id="above-details">
             <section id="buttons">
                 <a href="{% url "tea-update" slug=tea.slug %}" id="update-button" class="button">Edytuj</a>
-                <a href="" id="delete-button" class="button">Usuń</a>
-                <a href="" id="brews-button" class="button">Parzenia</a>
+                <a href="{% url "brews-list" slug=tea.slug %}" id="brews-list-button" class="button">Parzenia</a>
                 <a href="{% url "create-brew" slug=tea.slug %}" id="create-brew-button" class="button">Dodaj parzenie</a>
+                <a href="" id="delete-button" class="button">Usuń</a>
             </section>
         </div>
         <div id="details">

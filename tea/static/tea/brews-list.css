@@ -1,0 +1,45 @@
+h2 {
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+#main-content {
+    color: #2e2e2e;
+    margin-left: 5rem;
+}
+
+#brews-table {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+#brews-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#brews-table tr:hover {
+    background-color: #ddd;
+}
+
+#brews-table th {
+    padding-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
+
+#brews-table td {
+    border: 1px solid #ddd;
+    padding: 3px 0px 3px 2px;
+}
+
+@media screen and (max-width: 900px) {
+    #main-content {
+        margin: 0;
+    }
+
+    #brews-table {
+        width: 100%;
+        margin-left: 0%;
+    }
+}

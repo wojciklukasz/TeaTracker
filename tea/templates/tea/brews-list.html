@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/brews-list.css" %}">
+{% endblock %}
+
+{% block title %}Parzenia {% endblock title %}
+
+{% block content %}
+    <main id="main-content">
+        <article id="all-brews">
+            {% if brews %}
+                <h2>Lista parzeń</h2>
+                <table id="brews-table">
+                    <tr>
+                        <th>Data parzenia</th>
+                        <th>Ilość herbaty</th>
+                        <th>Ilość wody</th>
+                        <th>Stosunek</th>
+                        <th>Opis</th>
+                    </tr>
+                    {% for brew in brews %}
+                    <a>
+                        <tr>
+                            <td>
+                                <a href="">
+                                    {{ brew.brew_date }}
+                                </a>
+                            </td>
+                            <td>{{ brew.grams|default_if_none:"-" }}</td>
+                            <td>{{ brew.water_ml|default_if_none:"-" }}</td>
+                            <td>
+                                {{ brew.ratio|default_if_none:"-" }}
+                                {% if brew.ratio %}
+                                    g / 100 ml
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if brew.tasting_notes|length > 25%}
+                                    {{ brew.tasting_notes|slice:":25" }}...
+                                {% else %}
+                                    {{ brew.tasting_notes }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <h2>Brak parzeń dla tej herbaty!</h2>
+            {% endif %}
+        </article>
+    </main>
+{% endblock  %}

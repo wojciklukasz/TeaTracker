@@ -33,6 +33,11 @@ urlpatterns = [
         "herbaty/<slug:slug>/edytuj", views.TeaUpdateView.as_view(), name="tea-update"
     ),
     path(
+        "herbaty/<slug:slug>/parzenia/",
+        views.BrewListView.as_view(),
+        name="brews-list",
+    ),
+    path(
         "herbaty/<slug:slug>/parzenia/dodaj",
         views.BrewCreateView.as_view(),
         name="create-brew",

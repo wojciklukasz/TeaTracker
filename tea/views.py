@@ -299,6 +299,9 @@ class BrewCreateView(CreateView):
 
         form.instance.tea = tea
 
+        if form.instance.grams and form.instance.water_ml:
+            form.instance.ratio = 100 / form.instance.water_ml * form.instance.grams
+
         self.success_url = reverse_lazy(
             "tea-detail",
             kwargs={
@@ -307,3 +310,24 @@ class BrewCreateView(CreateView):
         )
 
         return super().form_valid(form)
+
+
+class BrewListView(ListView):
+    template_name = "tea/brews-list.html"
+    model = models.Brew
+    context_object_name = "brews"
+    ordering = ["brew_date"]
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self) -> QuerySet[Any]:
+        tea_slug = self.kwargs["slug"]
+        tea = models.Tea.objects.get(slug=tea_slug)
+
+        querryset = super().get_queryset()
+        querryset = querryset.filter(tea=tea)
+
+        return querryset.filter(tea=tea)
