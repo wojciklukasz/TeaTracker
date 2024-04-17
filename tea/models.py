@@ -205,6 +205,7 @@ class Brew(models.Model):
         blank=True,
         verbose_name=_("Ilość wody"),
     )
+    ratio = models.FloatField(null=True, blank=True, verbose_name=_("Stosunek"))
 
     def __str__(self) -> str:
         return f"{self.tea.name} {self.brew_date}"
