@@ -331,3 +331,13 @@ class BrewListView(ListView):
         querryset = querryset.filter(tea=tea)
 
         return querryset.filter(tea=tea)
+
+
+class BrewDetailView(DetailView):
+    model = models.Brew
+    template_name = "tea/brew-detail.html"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)

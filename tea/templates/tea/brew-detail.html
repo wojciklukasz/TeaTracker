@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "tea/brew-detail.css" %}">
+{% endblock %}
+
+{% block title %}Parzenie {{ brew.tea.name }}{% endblock title %}
+
+{% block content %}
+    <main id="main-content">
+        <h1 id="name">Parzenie {{ brew.tea.name }}</h1>
+        <p id="date">{{ brew.brew_date }}</p>
+        <div id="above-details">
+            <section id="buttons">
+                <a href="" id="update-button" class="button">Edytuj</a>
+                <a href="" id="delete-button" class="button">Usuń</a>
+            </section>
+        </div>
+        <section id="brew-details">
+            <div class="separator"><b>GRAMY I WODA</b></div>
+            <p><b>Ilość herbaty:</b> {{ brew.grams }} g</p>
+            <p><b>Ilość wody:</b> {{ brew.water_ml }} ml</p>
+            <p><b>Stosunek:</b> {{ brew.ratio }} g / 100 ml</p>
+        </section>
+        <section id="description">
+            <div class="separator"><b>OPIS</b></div>
+            <p>{{ brew.tasting_notes }}</p>
+        </section>
+    </main>
+{% endblock %}

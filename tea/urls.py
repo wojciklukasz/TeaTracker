@@ -42,4 +42,9 @@ urlpatterns = [
         views.BrewCreateView.as_view(),
         name="create-brew",
     ),
+    path(
+        "herbaty/parzenie/<int:pk>",
+        views.BrewDetailView.as_view(),
+        name="brew-detail",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
