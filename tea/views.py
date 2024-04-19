@@ -19,6 +19,13 @@ from . import forms, models
 generic_template = "tea/create-others.html"
 
 
+def calculate_ratio(form):
+    if form.instance.grams and form.instance.water_ml:
+        form.instance.ratio = round(
+            100 / form.instance.water_ml * form.instance.grams, 2
+        )
+
+
 class MainPageView(ListView):
     template_name = "tea/main-page.html"
     model = models.Tea
@@ -298,8 +305,7 @@ class BrewCreateView(CreateView):
 
         form.instance.tea = tea
 
-        if form.instance.grams and form.instance.water_ml:
-            form.instance.ratio = 100 / form.instance.water_ml * form.instance.grams
+        calculate_ratio(form)
 
         self.success_url = reverse_lazy(
             "tea-detail",
@@ -362,8 +368,7 @@ class BrewUpdateView(UpdateView):
         return context
 
     def form_valid(self, form):
-        if form.instance.grams and form.instance.water_ml:
-            form.instance.ratio = 100 / form.instance.water_ml * form.instance.grams
+        calculate_ratio(form)
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
