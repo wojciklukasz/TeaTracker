@@ -50,6 +50,6 @@ urlpatterns = [
     path(
         "herbaty/parzenie/<int:pk>/edytuj",
         views.BrewUpdateView.as_view(),
-        name="brew-detail",
+        name="brew-update",
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
