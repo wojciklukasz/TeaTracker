@@ -299,6 +299,11 @@ class BrewCreateView(CreateView):
             return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Dodaj"
+        return context
+
     def form_valid(self, form: forms.BrewForm) -> HttpResponse:
         tea_slug = self.kwargs["slug"]
         tea = models.Tea.objects.get(slug=tea_slug)
