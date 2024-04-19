@@ -203,7 +203,7 @@ class Brew(models.Model):
         validators=[MinValueValidator(1)],
         null=True,
         blank=True,
-        verbose_name=_("Ilość wody"),
+        verbose_name=_("Ilość wody (ml)"),
     )
     ratio = models.FloatField(null=True, blank=True, verbose_name=_("Stosunek"))
 
