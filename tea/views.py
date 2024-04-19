@@ -337,6 +337,11 @@ class BrewListView(ListView):
 
         return querryset.filter(tea=tea)
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["tea_slug"] = self.kwargs["slug"]
+        return context
+
 
 class BrewDetailView(DetailView):
     model = models.Brew

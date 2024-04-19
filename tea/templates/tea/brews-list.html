@@ -9,9 +9,14 @@
 
 {% block content %}
     <main id="main-content">
+        <h2>Lista parzeń</h2>
+        <div id="above-brews">
+            <section id="buttons">
+                <a href="{% url "create-brew" slug=tea_slug %}" id="create-brew-button" class="button">Dodaj parzenie</a>
+            </section>
+        </div>
         <article id="all-brews">
             {% if brews %}
-                <h2>Lista parzeń</h2>
                 <table id="brews-table">
                     <tr>
                         <th>Data parzenia</th>

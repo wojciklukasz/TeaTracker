@@ -3,6 +3,18 @@ h2 {
     margin-top: 2rem;
 }
 
+#above-brews {
+    padding-bottom: 1.5rem;
+}
+
+.button {
+    text-decoration: none;
+    color: #1f1f1f;
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    padding: 5px;
+}
+
 #main-content {
     color: #2e2e2e;
     margin-left: 5rem;
