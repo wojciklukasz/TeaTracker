@@ -177,7 +177,6 @@ class TeaUpdateView(UpdateView):
         return context
 
     def get_success_url(self) -> str:
-        print(self.object.slug)
         return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
 
 
