@@ -341,3 +341,31 @@ class BrewDetailView(DetailView):
         if not request.session.get("profile_id"):
             return redirect("profile-select")
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Dodaj"
+        return context
+
+
+class BrewUpdateView(UpdateView):
+    model = models.Brew
+    template_name = "tea/create-brew.html"
+    fields = [
+        "grams",
+        "water_ml",
+        "tasting_notes",
+    ]
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Zapisz zmiany"
+        return context
+
+    def form_valid(self, form):
+        if form.instance.grams and form.instance.water_ml:
+            form.instance.ratio = 100 / form.instance.water_ml * form.instance.grams
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("brews-list", kwargs={"slug": self.object.tea.slug})
