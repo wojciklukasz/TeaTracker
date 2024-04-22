@@ -127,8 +127,8 @@ class UpdateBrewTestCase(TestCase):
         models.Tea.objects.create(
             name="Test tea",
             slug="test_tea",
-            price_per_100_grams=1,
-            grams_left=1,
+            price_per_100_grams=100,
+            grams_left=100,
             profile=profile,
         )
 
@@ -140,7 +140,7 @@ class UpdateBrewTestCase(TestCase):
         self.test_tea = models.Tea.objects.get(slug="test_tea")
         self.default_brew = {
             "tea": self.test_tea,
-            "tasting_notes": "Tasty test",
+            "tasting_notes": "test",
             "grams": 5,
             "water_ml": 100,
         }
