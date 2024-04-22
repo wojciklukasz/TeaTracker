@@ -344,7 +344,9 @@ class BrewListView(ListView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["tea_slug"] = self.kwargs["slug"]
+        slug = self.kwargs["slug"]
+        context["tea_slug"] = slug
+        context["tea_name"] = models.Tea.objects.get(slug=slug).name
         return context
 
 
