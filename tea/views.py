@@ -19,7 +19,7 @@ from . import forms, models
 generic_template = "tea/create-others.html"
 
 
-def calculate_ratio(form):
+def calculate_ratio(form: forms.BrewForm) -> None:
     if form.instance.grams and form.instance.water_ml:
         form.instance.ratio = round(
             100 / form.instance.water_ml * form.instance.grams, 2
@@ -69,7 +69,7 @@ class ProfileSelectView(FormView):
             context["current_profile"] = models.Profile.objects.get(id=profile_id)
         return context
 
-    def form_valid(self, form):
+    def form_valid(self, form: forms.ProfileForm) -> HttpResponse:
         self.request.session["profile_id"] = form.cleaned_data["profile"].id
         return super().form_valid(form)
 
@@ -377,7 +377,7 @@ class BrewUpdateView(UpdateView):
         context["button_text"] = "Zapisz zmiany"
         return context
 
-    def form_valid(self, form):
+    def form_valid(self, form: forms.BrewForm) -> HttpResponse:
         calculate_ratio(form)
         return super().form_valid(form)
 
