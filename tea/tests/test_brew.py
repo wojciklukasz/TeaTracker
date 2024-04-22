@@ -118,3 +118,76 @@ class CreateBrewTestCase(TestCase):
         self.assertContains(response, str(brew.grams).replace(".", ","))
         self.assertContains(response, brew.water_ml)
         self.assertContains(response, brew.tasting_notes)
+
+
+class UpdateBrewTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        profile = models.Profile.objects.create(name="default")
+        models.Tea.objects.create(
+            name="Test tea",
+            slug="test_tea",
+            price_per_100_grams=1,
+            grams_left=1,
+            profile=profile,
+        )
+
+    def setUp(self) -> None:
+        session = self.client.session
+        session["profile_id"] = models.Profile.objects.get(name="default").id
+        session.save()
+
+        self.test_tea = models.Tea.objects.get(slug="test_tea")
+        self.default_brew = {
+            "tea": self.test_tea,
+            "tasting_notes": "Tasty test",
+            "grams": 5,
+            "water_ml": 100,
+        }
+
+        self.client.post(
+            reverse_lazy(
+                "create-brew",
+                kwargs={"slug": self.test_tea.slug},
+            ),
+            data=self.default_brew,
+        )
+        self.test_brew = models.Brew.objects.get(pk=1)
+
+    def test_update_button(self) -> None:
+        response = self.client.get(
+            reverse_lazy(
+                "brew-detail",
+                kwargs={"pk": self.test_brew.pk},
+            )
+        )
+
+        self.assertContains(response, 'id="update-button"')
+        self.assertContains(response, 'href="/herbaty/parzenie/1/edytuj"')
+
+    def test_updating_brew(self) -> None:
+        updated_brew_data = self.default_brew
+        updated_brew_data["grams"] = 10
+
+        response = self.client.post(
+            reverse_lazy(
+                "brew-update",
+                kwargs={"pk": self.test_brew.pk},
+            ),
+            data=updated_brew_data,
+        )
+
+        self.assertRedirects(
+            response,
+            reverse_lazy("brews-list", kwargs={"slug": self.test_tea.slug}),
+            status_code=HTTPStatus.FOUND,
+            target_status_code=HTTPStatus.OK,
+        )
+
+        updated_brew = models.Brew.objects.last()
+
+        response = self.client.get(
+            reverse_lazy("brew-detail", kwargs={"pk": updated_brew.pk})
+        )
+
+        self.assertContains(response, "10,0 g / 100 ml")  # new ratio
