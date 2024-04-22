@@ -32,4 +32,24 @@ urlpatterns = [
     path(
         "herbaty/<slug:slug>/edytuj", views.TeaUpdateView.as_view(), name="tea-update"
     ),
+    path(
+        "herbaty/<slug:slug>/parzenia/",
+        views.BrewListView.as_view(),
+        name="brews-list",
+    ),
+    path(
+        "herbaty/<slug:slug>/parzenia/dodaj",
+        views.BrewCreateView.as_view(),
+        name="create-brew",
+    ),
+    path(
+        "herbaty/parzenie/<int:pk>",
+        views.BrewDetailView.as_view(),
+        name="brew-detail",
+    ),
+    path(
+        "herbaty/parzenie/<int:pk>/edytuj",
+        views.BrewUpdateView.as_view(),
+        name="brew-update",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

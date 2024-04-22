@@ -11,26 +11,38 @@
     <main id='details-main'>
         <h1>{{ tea.name }}</h1>
         <div id="above-details">
-            <section id="cultivar">
-                <p><b>Kultywar:</b>
-                {% if tea.cultivar %}
-                    {{ tea.cultivar }}
-                {% else %}
-                    Brak danych
-                {% endif %}
-                </p>
+            <section id="buttons">
+                <a href="{% url "tea-update" slug=tea.slug %}" id="update-button" class="button">Edytuj</a>
+                <a href="{% url "brews-list" slug=tea.slug %}" id="brews-list-button" class="button">Parzenia</a>
+                <a href="{% url "create-brew" slug=tea.slug %}" id="create-brew-button" class="button">Dodaj parzenie</a>
+                <a href="" id="delete-button" class="button">Usuń</a>
             </section>
-            <section id="update">
-                <a href="{% url "tea-update" slug=tea.slug %}" id="update-button">Edytuj</a>
         </div>
         <div id="details">
-            {% if tea.image_set.first.image.url %}
-            <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
-            {% else %}
-            <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
-            {% endif %}
+            <section id="images">
+                {% if tea.image_set.first.image.url %}
+                <img class="tea-image" src="{{ tea.image_set.first.image.url }}" alt="Zdjęcie herbaty"/>
+                {% else %}
+                <img class="tea-image" src="{% static "images/default_tea.png" %}" alt="Rysunek liści herbaty, brak zdjęć"/>
+                {% endif %}
+            </section>
             <div id="text-grid">
-                <section id="dates">
+                <div class="separator"><b>OGÓLNE INFORMACJE</b></div>
+                <section id="tea-information">
+                    <p><b>Typ herbaty:</b>
+                        {% if tea.type %}
+                            {{ tea.type }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Kultywar:</b>
+                    {% if tea.cultivar %}
+                        {{ tea.cultivar }}
+                    {% else %}
+                        Brak danych
+                    {% endif %}
+                    </p>
                     <p><b>Sezon:</b>
                     {% if tea.season %}
                         {{ tea.get_season_display }}
@@ -52,14 +64,94 @@
                             Brak danych
                         {% endif %}
                     </p>
-                </section>
+                    <p><b>Kraj:</b>
+                        {% if tea.country %}
+                            {{ tea.country }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Prowincja:</b>
+                        {% if tea.province %}
+                            {{ tea.province }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Region:</b>
+                        {% if tea.region %}
+                            {{ tea.region }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                </section id="tea-descriptions">
+                <div class="separator"><b>OPISY</b></div>
                 <section id="description">
                     <h2>Opis sprzedawcy</h2>
-                    <p>{{ tea.store_description }}</p>
+                    {% if tea.store_description %}
+                        <p>{{ tea.store_description }}</p>
+                    {% else %}
+                        <p>----</p>
+                    {% endif %}
                     <h2>Opis własny</h2>
-                    <p>{{ tea.user_description }}</p>
-                    <h2>Smak</h2>
-                    <p>{{ tea.tasting_notes }}</p>
+                    {% if tea.user_description %}
+                        <p>{{ tea.user_description }}</p>
+                    {% else %}
+                        <p>----</p>
+                    {% endif %}
+                    <h2>Smak i aromat</h2>
+                    {% if tea.tasting_notes %}
+                        <p>{{ tea.tasting_notes }}</p>
+                    {% else %}
+                        <p>----</p>
+                    {% endif %}
+                </section>
+                <div class="separator"><b>POZOSTAŁE</b></div>
+                <section id="tea-other">
+                    <p><b>Pozostało gramów:</b>
+                        {% if tea.grams_left %}
+                            {{ tea.grams_left }} g
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Sklep:</b>
+                        {% if tea.store %}
+                            {{ tea.store }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Cena (100 g):</b>
+                        {% if tea.price_per_100_grams %}
+                            {{ tea.price_per_100_grams }} zł
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Dodano:</b>
+                        {% if tea.date_added %}
+                            {{ tea.date_added.date }}
+                        {% else %}
+                            Brak danych
+                        {% endif %}
+                    </p>
+                    <p><b>Skończono:</b>
+                        {% if tea.date_finished %}
+                            {{ tea.date_finished.date }}
+                        {% else %}
+                            Nadal jest :)
+                        {% endif %}
+                    </p>
+                </section>
+                <div class="separator"><b>UWAGI</b></div>
+                <section id="additional-notes">
+                    {% if tea.additional_notes %}
+                        <p>{{ tea.additional_notes }}</p>
+                    {% else %}
+                        <p>----</p>
+                    {% endif %}
                 </section>
             </div>
         </div>

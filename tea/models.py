@@ -192,7 +192,20 @@ class Image(models.Model):
 class Brew(models.Model):
     tea = models.ForeignKey(Tea, on_delete=models.CASCADE)
     brew_date = models.DateField(auto_now_add=True)
-    tasting_notes = models.TextField()
+    tasting_notes = models.TextField(verbose_name=_("Opis"))
+    grams = models.FloatField(
+        validators=[MinValueValidator(0.1)],
+        null=True,
+        blank=True,
+        verbose_name=_("Gramy"),
+    )
+    water_ml = models.IntegerField(
+        validators=[MinValueValidator(1)],
+        null=True,
+        blank=True,
+        verbose_name=_("Ilość wody (ml)"),
+    )
+    ratio = models.FloatField(null=True, blank=True, verbose_name=_("Stosunek"))
 
     def __str__(self) -> str:
         return f"{self.tea.name} {self.brew_date}"
