@@ -105,3 +105,9 @@ class RegionForm(forms.ModelForm):
     class Meta:
         model = models.Region
         fields = ["name", "province"]
+
+
+class BrewForm(forms.ModelForm):
+    class Meta:
+        model = models.Brew
+        fields = ["grams", "water_ml", "tasting_notes"]

@@ -1,0 +1,73 @@
+p {
+    font-size: large;
+    margin: 0.5rem 2rem 0.5rem 0rem;
+}
+
+#name {
+    margin: 0.5rem;
+}
+
+#date {
+    margin: 0 0 2rem 0.5rem;
+}
+
+#main-content {
+    color: #2e2e2e;
+    margin-left: 5rem;
+}
+
+#above-details {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.button {
+    text-decoration: none;
+    color: #1f1f1f;
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    padding: 5px;
+    margin-left: 0.5rem;
+}
+
+#description p {
+    max-width: 800px;
+}
+
+.tea-image {
+    object-fit: scale-down;
+    width: 99%;
+    height: 99%;
+    max-height: 75vh;
+    max-width: 30vw;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #6b6b6b;
+    width: 100%;
+    max-width: 850px;
+}
+  
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #6b6b6b;
+}
+  
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+  
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+@media screen and (max-width: 900px) {
+    #main-content {
+        margin: 0;
+    }
+}

@@ -19,6 +19,13 @@ from . import forms, models
 generic_template = "tea/create-others.html"
 
 
+def calculate_ratio(form: forms.BrewForm) -> None:
+    if form.instance.grams and form.instance.water_ml:
+        form.instance.ratio = round(
+            100 / form.instance.water_ml * form.instance.grams, 2
+        )
+
+
 class MainPageView(ListView):
     template_name = "tea/main-page.html"
     model = models.Tea
@@ -62,7 +69,7 @@ class ProfileSelectView(FormView):
             context["current_profile"] = models.Profile.objects.get(id=profile_id)
         return context
 
-    def form_valid(self, form):
+    def form_valid(self, form: forms.ProfileForm) -> HttpResponse:
         self.request.session["profile_id"] = form.cleaned_data["profile"].id
         return super().form_valid(form)
 
@@ -177,7 +184,6 @@ class TeaUpdateView(UpdateView):
         return context
 
     def get_success_url(self) -> str:
-        print(self.object.slug)
         return reverse_lazy("tea-detail", kwargs={"slug": self.object.slug})
 
 
@@ -281,3 +287,101 @@ class RegionCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["page_title"] = "Nowy region"
         return context
+
+
+class BrewCreateView(CreateView):
+    model = models.Brew
+    form_class = forms.BrewForm
+    template_name = "tea/create-brew.html"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Dodaj"
+        return context
+
+    def form_valid(self, form: forms.BrewForm) -> HttpResponse:
+        tea_slug = self.kwargs["slug"]
+        tea = models.Tea.objects.get(slug=tea_slug)
+
+        form.instance.tea = tea
+
+        calculate_ratio(form)
+
+        self.success_url = reverse_lazy(
+            "tea-detail",
+            kwargs={
+                "slug": tea_slug,
+            },
+        )
+
+        return super().form_valid(form)
+
+
+class BrewListView(ListView):
+    template_name = "tea/brews-list.html"
+    model = models.Brew
+    context_object_name = "brews"
+    ordering = ["brew_date"]
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self) -> QuerySet[Any]:
+        tea_slug = self.kwargs["slug"]
+        tea = models.Tea.objects.get(slug=tea_slug)
+
+        querryset = super().get_queryset()
+        querryset = querryset.filter(tea=tea)
+
+        return querryset.filter(tea=tea)
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs["slug"]
+        context["tea_slug"] = slug
+        context["tea_name"] = models.Tea.objects.get(slug=slug).name
+        return context
+
+
+class BrewDetailView(DetailView):
+    model = models.Brew
+    template_name = "tea/brew-detail.html"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.session.get("profile_id"):
+            return redirect("profile-select")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Dodaj"
+        return context
+
+
+class BrewUpdateView(UpdateView):
+    model = models.Brew
+    template_name = "tea/create-brew.html"
+    fields = [
+        "grams",
+        "water_ml",
+        "tasting_notes",
+    ]
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["button_text"] = "Zapisz zmiany"
+        return context
+
+    def form_valid(self, form: forms.BrewForm) -> HttpResponse:
+        calculate_ratio(form)
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("brews-list", kwargs={"slug": self.object.tea.slug})
