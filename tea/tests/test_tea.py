@@ -9,26 +9,27 @@ from tea import models
 class CreateTeaTestCase(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        models.Profile.objects.create(name="default")
+        models.Profile.objects.create(name="create_tea")
 
     def setUp(self) -> None:
         session = self.client.session
-        session["profile_id"] = models.Profile.objects.get(name="default").id
+        session["profile_id"] = models.Profile.objects.get(name="create_tea").id
         session.save()
 
         self.default_tea = {
             "name": "Test Tea",
             "price_per_100_grams": "1",
             "grams_left": "1",
+            "profile_id": "1",
         }
 
-    def test_page_load(self):
+    def test_page_load(self) -> None:
         response = self.client.get(reverse_lazy("create-tea"))
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "<h1>Nowa herbata</h1>", html=True)
 
-    def test_incorrect_form(self):
+    def test_incorrect_form(self) -> None:
         test_tea = self.default_tea.copy()
         test_tea["name"] = ""
 
@@ -40,7 +41,7 @@ class CreateTeaTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "To pole jest wymagane.")
 
-    def test_valid_form(self):
+    def test_valid_form(self) -> None:
         response = self.client.post(
             reverse_lazy("create-tea"),
             data=self.default_tea,
@@ -53,7 +54,7 @@ class CreateTeaTestCase(TestCase):
             target_status_code=HTTPStatus.OK,
         )
 
-    def test_slug_creation(self):
+    def test_slug_creation(self) -> None:
         self.client.post(
             reverse_lazy("create-tea"),
             data=self.default_tea,
@@ -71,7 +72,7 @@ class CreateTeaTestCase(TestCase):
             target_status_code=HTTPStatus.OK,
         )
 
-    def test_unequal_dates(self):
+    def test_unequal_dates(self) -> None:
         test_tea = self.default_tea.copy()
         test_tea["harvest_date"] = "2022-01-01"
         test_tea["year"] = "2023"
@@ -84,7 +85,7 @@ class CreateTeaTestCase(TestCase):
         self.assertContains(response, '<ul class="errorlist">')
         self.assertContains(response, "Rok nie zgadza się z datą zbiorów!")
 
-    def test_future_dates(self):
+    def test_future_dates(self) -> None:
         test_tea = self.default_tea.copy()
         test_tea["harvest_date"] = "2025-01-01"
         test_tea["year"] = "2025"
@@ -102,14 +103,14 @@ class CreateTeaTestCase(TestCase):
 class CreateOthersTestCase(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        models.Profile.objects.create(name="default")
+        models.Profile.objects.create(name="create_others")
 
     def setUp(self) -> None:
         session = self.client.session
-        session["profile_id"] = models.Profile.objects.get(name="default").id
+        session["profile_id"] = models.Profile.objects.get(name="create_others").id
         session.save()
 
-    def test_plus_buttons(self):
+    def test_plus_buttons(self) -> None:
         response = self.client.get(reverse_lazy("create-tea"))
 
         self.assertContains(
@@ -118,7 +119,7 @@ class CreateOthersTestCase(TestCase):
             6,
         )
 
-    def test_create_cultivar(self):
+    def test_create_cultivar(self) -> None:
         cultivar_name = "Test Cultivar"
 
         response = self.client.post(
@@ -135,23 +136,29 @@ class CreateOthersTestCase(TestCase):
             target_status_code=HTTPStatus.OK,
         )
 
-        test_tea = self.default_tea.copy()
-        test_tea["cultivar"] = models.Cultivar.objects.get(name=cultivar_name).id
-
         response = self.client.post(
             reverse_lazy("create-tea"),
-            data=test_tea,
+            data={
+                "name": "Test",
+                "slug": "test",
+                "price_per_100_grams": "12",
+                "grams_left": "12",
+                "profile_id": "1",
+                "cultivar": models.Cultivar.objects.get(pk=1).id,
+            },
         )
+
+        new_tea = models.Tea.objects.get(pk=1)
 
         self.assertRedirects(
             response,
-            reverse_lazy("tea-detail", kwargs={"slug": "test-tea"}),
+            reverse_lazy("tea-detail", kwargs={"slug": new_tea.slug}),
             status_code=HTTPStatus.FOUND,
             target_status_code=HTTPStatus.OK,
         )
 
         response = self.client.get(
-            reverse_lazy("tea-detail", kwargs={"slug": "test-tea"})
+            reverse_lazy("tea-detail", kwargs={"slug": new_tea.slug})
         )
 
         self.assertContains(response, cultivar_name)
