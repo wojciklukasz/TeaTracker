@@ -98,6 +98,17 @@ class CreateTeaTestCase(TestCase):
         self.assertContains(response, "Rok produkcji jest większy niż aktualny rok!")
         self.assertContains(response, "Data zbiorów jest w przyszłości!")
 
+
+class CreateOthersTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        models.Profile.objects.create(name="default")
+
+    def setUp(self) -> None:
+        session = self.client.session
+        session["profile_id"] = models.Profile.objects.get(name="default").id
+        session.save()
+
     def test_plus_buttons(self):
         response = self.client.get(reverse_lazy("create-tea"))
 
