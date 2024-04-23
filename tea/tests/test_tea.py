@@ -49,7 +49,9 @@ class CreateTeaTestCase(TestCase):
 
         self.assertRedirects(
             response,
-            reverse_lazy("tea-detail", kwargs={"slug": "test-tea"}),
+            reverse_lazy(
+                "tea-detail", kwargs={"slug": models.Tea.objects.get(pk=1).slug}
+            ),
             status_code=HTTPStatus.FOUND,
             target_status_code=HTTPStatus.OK,
         )
