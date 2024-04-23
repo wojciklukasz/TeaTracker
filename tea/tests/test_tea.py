@@ -7,12 +7,6 @@ from tea import models
 
 
 class CreateTeaTestCase(TestCase):
-    default_tea = {
-        "name": "Test Tea",
-        "price_per_100_grams": "1",
-        "grams_left": "1",
-    }
-
     @classmethod
     def setUpTestData(cls) -> None:
         models.Profile.objects.create(name="default")
@@ -21,6 +15,12 @@ class CreateTeaTestCase(TestCase):
         session = self.client.session
         session["profile_id"] = models.Profile.objects.get(name="default").id
         session.save()
+
+        self.default_tea = {
+            "name": "Test Tea",
+            "price_per_100_grams": "1",
+            "grams_left": "1",
+        }
 
     def test_page_load(self):
         response = self.client.get(reverse_lazy("create-tea"))
