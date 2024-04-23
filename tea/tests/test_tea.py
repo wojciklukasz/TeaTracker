@@ -164,3 +164,61 @@ class CreateOthersTestCase(TestCase):
         )
 
         self.assertContains(response, cultivar_name)
+
+
+class UpdateTeaTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        profile = models.Profile.objects.create(name="update_tea")
+        models.Tea.objects.create(
+            name="Test Tea",
+            slug="test-tea",
+            price_per_100_grams=100,
+            grams_left=100,
+            profile=profile,
+        )
+
+    def setUp(self) -> None:
+        session = self.client.session
+        session["profile_id"] = models.Profile.objects.get(name="update_tea").id
+        session.save()
+
+        self.test_tea = models.Tea.objects.get(pk=1)
+
+    def test_update_button(self) -> None:
+        response = self.client.get(
+            reverse_lazy(
+                "tea-detail",
+                kwargs={
+                    "slug": self.test_tea.slug,
+                },
+            )
+        )
+
+        self.assertContains(response, 'id="update-button"')
+        self.assertContains(response, f'href="/herbaty/{self.test_tea.slug}/edytuj"')
+
+    def test_update_tea_grams(self) -> None:
+        response = self.client.post(
+            reverse_lazy("tea-update", kwargs={"slug": self.test_tea.slug}),
+            data={
+                "name": self.test_tea.name,
+                "slug": self.test_tea.slug,
+                "profile_id": self.test_tea.profile,
+                "price_per_100_grams": self.test_tea.price_per_100_grams,
+                "grams_left": 50,
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse_lazy("tea-detail", kwargs={"slug": self.test_tea.slug}),
+            status_code=HTTPStatus.FOUND,
+            target_status_code=HTTPStatus.OK,
+        )
+
+        response = self.client.get(
+            reverse_lazy("tea-detail", kwargs={"slug": self.test_tea.slug})
+        )
+
+        self.assertContains(response, "50 g")
